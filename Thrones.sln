@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thrones", "Thrones.csproj", "{A3180905-DDF2-4AD4-87A3-4326C726BFDA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3180905-DDF2-4AD4-87A3-4326C726BFDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3180905-DDF2-4AD4-87A3-4326C726BFDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3180905-DDF2-4AD4-87A3-4326C726BFDA}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{A3180905-DDF2-4AD4-87A3-4326C726BFDA}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{A3180905-DDF2-4AD4-87A3-4326C726BFDA}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{A3180905-DDF2-4AD4-87A3-4326C726BFDA}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal

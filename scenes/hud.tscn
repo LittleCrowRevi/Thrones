@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5ydq6eiilj7i"]
+
+[ext_resource type="Texture2D" uid="uid://ckt3spy0fpj5b" path="res://textures/hud/hp-barframe.png" id="1_4omoo"]
+[ext_resource type="Script" path="res://scripts/hud.cs" id="1_ipiby"]
+[ext_resource type="Texture2D" uid="uid://qv15gj548p6m" path="res://textures/hud/hp-barfill.png" id="2_3qi1t"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_ipiby")
+
+[node name="HP-Bar" type="TextureProgressBar" parent="."]
+offset_left = 39.0
+offset_top = 29.0
+offset_right = 91.0
+offset_bottom = 35.0
+scale = Vector2(3, 3)
+texture_under = ExtResource("1_4omoo")
+texture_progress = ExtResource("2_3qi1t")
+texture_progress_offset = Vector2(12, 1)
