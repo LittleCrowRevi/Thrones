@@ -16,8 +16,6 @@ public partial class Player : CharacterBody2D
 
 	[Signal]
 	public delegate void HealthChangedEventHandler(int healthValue);
-	[Signal]
-	public delegate void PlayerDamageEventHandler(int damage);
 
 	// Variable containing min and max Zoom Levels
 	private Vector2 _ZoomLevels = new Vector2(1.5f, 4.0f);
@@ -42,9 +40,6 @@ public partial class Player : CharacterBody2D
 		// floating text preload
 		floatingText = (PackedScene)ResourceLoader.Load("res://scenes/FloatingText.tscn");
 
-		// connect the PlayerDamage and FloatingDamage signal
-		PlayerDamage += OnHit;
-
 		Health = 100;
 		Mana = 100f;
 		EmitSignal(SignalName.HealthChanged, Health);
@@ -62,6 +57,18 @@ public partial class Player : CharacterBody2D
 
 		EmitSignal(SignalName.HealthChanged, damage);
 	}
+	
+	private void OnHeal(int heal)
+	{
+		Health += heal;
+		// floating numbers
+		var floatingHeal = (FloatingText)floatingText.Instantiate();
+		floatingHeal.Amount = heal;
+		floatingHeal.type = FloatingText.TextType.Heal;
+		AddChild(floatingHeal);
+
+		EmitSignal(SignalName.HealthChanged, heal);
+	}
 
 	private void GetInput(double delta)
 	{
@@ -72,9 +79,14 @@ public partial class Player : CharacterBody2D
 		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
 
 		// test damage function
+		// TODO: Maybe turn the method calls into signals?
 		if (Input.IsActionJustReleased("damage_button"))
 		{
-			EmitSignal(SignalName.PlayerDamage, -20);
+			OnHit(-20);
+		}
+		if (Input.IsActionJustReleased("heal_button"))
+		{
+			OnHeal(+20);
 		}
 
 		// Zoom Action

@@ -29,7 +29,10 @@ public partial class FloatingText : Marker2D
 		switch(type)
 		{
 			case TextType.Damage:
-				label.LabelSettings.FontColor = new Color("ff001e");
+				label.LabelSettings.FontColor = new Color("f56a63");
+				break;
+			case TextType.Heal:
+				label.LabelSettings.FontColor = new Color("84f586");
 				break;
 			default:
 				break;

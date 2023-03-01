@@ -9,9 +9,9 @@ base_font = ExtResource("2_0mudh")
 [sub_resource type="LabelSettings" id="LabelSettings_ms540"]
 font = SubResource("FontVariation_dr071")
 font_size = 7
-font_color = Color(1, 0, 0.117647, 1)
+font_color = Color(0.517647, 0.960784, 0.52549, 1)
 outline_size = 2
-outline_color = Color(0, 0, 0, 1)
+outline_color = Color(0.129412, 0.129412, 0.129412, 1)
 
 [node name="FloatingText" type="Marker2D"]
 script = ExtResource("1_nk4pd")
@@ -21,6 +21,7 @@ texture_filter = 2
 offset_right = 1.0
 offset_bottom = 6.2
 scale = Vector2(0.7, 0.7)
+text = "22"
 label_settings = SubResource("LabelSettings_ms540")
 horizontal_alignment = 1
 vertical_alignment = 1
