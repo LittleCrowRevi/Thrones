@@ -34,11 +34,11 @@ public partial class Player : CharacterBody2D
 		// floating text preload
 		floatingText = (PackedScene)ResourceLoader.Load("res://scenes/FloatingText.tscn");
 
-		//EmitSignal(SignalName.HealthChanged, Health);
-
 	}
 
-	private void OnHit(int damage)
+	// TODO: OnDamage and OnHeal maybe refactor into a single EventHandler? 
+	// Make damage and such be handeld by the root scene? So that it can be independent from any entities
+	private void OnDamage(int damage)
 	{
 		var playerData = (PlayerData)GetNode("/root/PlayerData");
 		var currentHealth = playerData.currentHealth;
@@ -51,7 +51,8 @@ public partial class Player : CharacterBody2D
 		floatingDamage.type = FloatingText.TextType.Damage;
 		AddChild(floatingDamage);
 
-		EmitSignal(SignalName.HealthChanged, damage);
+		var globalEvents = (GlobalEvents)GetNode("/root/GlobalEvents");
+		globalEvents.EmitSignal(GlobalEvents.SignalName.PlayerHealthChanged, damage);
 	}
 	
 	private void OnHeal(int heal)
@@ -67,7 +68,8 @@ public partial class Player : CharacterBody2D
 		floatingHeal.type = FloatingText.TextType.Heal;
 		AddChild(floatingHeal);
 
-		EmitSignal(SignalName.HealthChanged, heal);
+		var globalEvents = (GlobalEvents)GetNode("/root/GlobalEvents");
+		globalEvents.EmitSignal(GlobalEvents.SignalName.PlayerHealthChanged, heal);
 	}
 
 	private void GetInput(double delta)
@@ -82,7 +84,7 @@ public partial class Player : CharacterBody2D
 		// TODO: Maybe turn the method calls into signals?
 		if (Input.IsActionJustReleased("damage_button"))
 		{
-			OnHit(-20);
+			OnDamage(-20);
 		}
 		if (Input.IsActionJustReleased("heal_button"))
 		{

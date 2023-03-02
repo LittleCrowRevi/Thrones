@@ -13,20 +13,20 @@ font_size = 14
 script = ExtResource("1_ipiby")
 
 [node name="HP-Bar" type="TextureProgressBar" parent="."]
-offset_left = 499.0
-offset_top = 395.0
-offset_right = 551.0
-offset_bottom = 401.0
+offset_left = 498.0
+offset_top = 405.0
+offset_right = 550.0
+offset_bottom = 411.0
 scale = Vector2(3, 3)
 texture_under = ExtResource("1_4omoo")
 texture_progress = ExtResource("2_3qi1t")
 texture_progress_offset = Vector2(12, 1)
 
 [node name="Label" type="Label" parent="."]
-offset_left = 558.0
-offset_top = 392.0
-offset_right = 624.0
-offset_bottom = 415.0
+offset_left = 557.0
+offset_top = 402.0
+offset_right = 623.0
+offset_bottom = 425.0
 text = "100/100"
 label_settings = SubResource("LabelSettings_nvc02")
 horizontal_alignment = 1

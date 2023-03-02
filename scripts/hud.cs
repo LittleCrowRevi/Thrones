@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+// TODO: Update signal and function which updates the hud upon receiving the signal
 public partial class hud : CanvasLayer
 {
 
@@ -9,8 +10,8 @@ public partial class hud : CanvasLayer
 	public override void _Ready()
 	{
 		// connect the health change signal
-		var player = GetNode<Player>("/root/TestScreen/Player");
-		player.HealthChanged += _on_player_health_changed; 
+		var globalEvents = GetNode<GlobalEvents>("/root/GlobalEvents");
+		globalEvents.PlayerHealthChanged  += _on_player_health_changed; 
 
 		// load hp data
 		var playerData = (PlayerData)GetNode("/root/PlayerData");
