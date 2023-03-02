@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ofp3ydu6skgt"]
+[gd_scene load_steps=5 format=3 uid="uid://d3lhjjjb7g2g7"]
 
 [ext_resource type="Script" path="res://scripts/FloatingText.cs" id="1_nk4pd"]
 [ext_resource type="FontFile" uid="uid://dilexsjekmt3h" path="res://textures/fonts/VCR_OSD_MONO_1.001.ttf" id="2_0mudh"]
@@ -10,8 +10,8 @@ base_font = ExtResource("2_0mudh")
 font = SubResource("FontVariation_dr071")
 font_size = 7
 font_color = Color(0.517647, 0.960784, 0.52549, 1)
-outline_size = 2
-outline_color = Color(0.129412, 0.129412, 0.129412, 1)
+outline_size = 1
+outline_color = Color(0.129412, 0.129412, 0.129412, 0.498039)
 
 [node name="FloatingText" type="Marker2D"]
 script = ExtResource("1_nk4pd")
@@ -21,7 +21,6 @@ texture_filter = 2
 offset_right = 1.0
 offset_bottom = 6.2
 scale = Vector2(0.7, 0.7)
-text = "22"
 label_settings = SubResource("LabelSettings_ms540")
 horizontal_alignment = 1
 vertical_alignment = 1

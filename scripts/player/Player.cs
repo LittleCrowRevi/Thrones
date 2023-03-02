@@ -6,19 +6,13 @@ public partial class Player : CharacterBody2D
 
 	[Export]
 	public float Speed = 300.0f;
-
-	[Export]
-	public int Health;
-	[Export]
-	public float Mana;
-	[Export]
 	public PackedScene floatingText;
 
 	[Signal]
 	public delegate void HealthChangedEventHandler(int healthValue);
 
 	// Variable containing min and max Zoom Levels
-	private Vector2 _ZoomLevels = new Vector2(1.5f, 4.0f);
+	private Vector2 _ZoomLevels = new Vector2(2.5f, 5.0f);
 
 
 	public override void _PhysicsProcess(double delta)
@@ -40,15 +34,17 @@ public partial class Player : CharacterBody2D
 		// floating text preload
 		floatingText = (PackedScene)ResourceLoader.Load("res://scenes/FloatingText.tscn");
 
-		Health = 100;
-		Mana = 100f;
-		EmitSignal(SignalName.HealthChanged, Health);
+		//EmitSignal(SignalName.HealthChanged, Health);
 
 	}
 
 	private void OnHit(int damage)
 	{
-		Health += damage;
+		var playerData = (PlayerData)GetNode("/root/PlayerData");
+		var currentHealth = playerData.currentHealth;
+		currentHealth += damage;
+		playerData.currentHealth = playerData.currentHealth <= 0 ? 0 : currentHealth;
+		
 		// floating numbers
 		var floatingDamage = (FloatingText)floatingText.Instantiate();
 		floatingDamage.Amount = damage;
@@ -60,7 +56,11 @@ public partial class Player : CharacterBody2D
 	
 	private void OnHeal(int heal)
 	{
-		Health += heal;
+		var playerData = (PlayerData)GetNode("/root/PlayerData");
+		var currentHealth = playerData.currentHealth;
+		currentHealth +=  heal;
+		playerData.currentHealth = currentHealth >= playerData.health ? playerData.health : currentHealth;
+
 		// floating numbers
 		var floatingHeal = (FloatingText)floatingText.Instantiate();
 		floatingHeal.Amount = heal;

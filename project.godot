@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="Thrones"
-run/main_scene="res://scenes/node_2d.tscn"
+run/main_scene="res://scenes/test_screen.tscn"
 config/features=PackedStringArray("4.0", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*res://scenes/global.tscn"
+PlayerData="*res://scenes/player/player_data.tscn"
 
 [dotnet]
 

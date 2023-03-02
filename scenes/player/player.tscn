@@ -1,6 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://b6544leffid6b"]
+[gd_scene load_steps=16 format=3 uid="uid://cq2fusj3dvsqt"]
 
-[ext_resource type="Script" path="res://scripts/Player.cs" id="1_xhlr8"]
+[ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_2csap"]
 [ext_resource type="Texture2D" uid="uid://bxt27ehlkvpof" path="res://textures/sprites/red-spritesheet.png" id="2_uxija"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i3mi6"]
@@ -111,7 +111,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_xhlr8")
+script = ExtResource("1_2csap")
 Speed = 250.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
@@ -126,4 +126,4 @@ frame_progress = 0.174399
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, 4)
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(3, 3)
