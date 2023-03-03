@@ -44,6 +44,8 @@ public partial class Player : CharacterBody2D
 		var currentHealth = playerData.currentHealth;
 		currentHealth += damage;
 		playerData.currentHealth = playerData.currentHealth <= 0 ? 0 : currentHealth;
+
+		
 		
 		// floating numbers
 		var floatingDamage = (FloatingText)floatingText.Instantiate();

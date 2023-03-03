@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b74bi111polep"]
+[gd_scene load_steps=6 format=3 uid="uid://bkh3bixcpq4pp"]
 
 [ext_resource type="PackedScene" uid="uid://clo83g7ddxup3" path="res://scenes/hud.tscn" id="1_7jhpb"]
-[ext_resource type="PackedScene" uid="uid://cq2fusj3dvsqt" path="res://scenes/player/player.tscn" id="2_2odqe"]
+[ext_resource type="PackedScene" uid="uid://dpr7hi8g3rpck" path="res://Characters/Player/player.tscn" id="2_j7i1r"]
 [ext_resource type="Texture2D" uid="uid://c6dx3jfhyxpdu" path="res://textures/tilemaps/Grass hill tiles v.2.png" id="3_wpjpt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tgneh"]
@@ -74,8 +74,8 @@ y_sort_enabled = true
 
 [node name="hud" parent="." instance=ExtResource("1_7jhpb")]
 
-[node name="Player" parent="." instance=ExtResource("2_2odqe")]
-position = Vector2(286, 208)
+[node name="Player" parent="." instance=ExtResource("2_j7i1r")]
+position = Vector2(424, 211)
 
 [node name="TileMap" type="TileMap" parent="."]
 visible = false

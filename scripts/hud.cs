@@ -2,6 +2,7 @@ using Godot;
 using System;
 
 // TODO: Update signal and function which updates the hud upon receiving the signal
+// maybe make it a global singleton handling all UIs?
 public partial class hud : CanvasLayer
 {
 
