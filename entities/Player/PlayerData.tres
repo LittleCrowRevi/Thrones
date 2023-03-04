@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c85nprbnv1aeg"]
+
+[ext_resource type="Script" path="res://entities/Player/PlayerData.cs" id="1_5tlg1"]
+
+[resource]
+script = ExtResource("1_5tlg1")
+MaxHealth = 0
+Health = 0
+MaxMana = 0
+Mana = 0

@@ -4,12 +4,9 @@ using System;
 public partial class Player : CharacterBody2D
 {
 
-	[Export]
-	public float Speed = 300.0f;
-	public PackedScene floatingText;
-
-	[Signal]
-	public delegate void HealthChangedEventHandler(int healthValue);
+	[Export] public float Speed = 300.0f;
+	[Export] public PackedScene floatingText = (PackedScene)ResourceLoader.Load("res://scenes/FloatingText.tscn");
+	[Export] public Resource data;
 
 	// Variable containing min and max Zoom Levels
 	private Vector2 _ZoomLevels = new Vector2(2.5f, 5.0f);
@@ -23,7 +20,8 @@ public partial class Player : CharacterBody2D
 	}
 
 	// called when the Player enters the scene
-	public override void _Ready() {
+	public override void _Ready() 
+	{
 
 		// sets the animation to idle once the Player loads in
 		// not really needed but eh, can't hurt to be safe
@@ -31,49 +29,48 @@ public partial class Player : CharacterBody2D
 		animatedSprite.Animation = "idle";
 		animatedSprite.Play();
 
-		// floating text preload
-		floatingText = (PackedScene)ResourceLoader.Load("res://scenes/FloatingText.tscn");
+		// load data to components
+		ConnectChildrenSignals();
 
 	}
 
+	public void ConnectChildrenSignals()
+	{
+		var HealthComponent = (HealthComponent)GetNode("HealthComponent");
+		
+		//GetNode<GlobalEvents>("/root/GlobalEvents").Connect(GlobalEvents.SignalName.PlayerHealthUpdated, new Callable(HealthComponent, HealthComponent.MethodName._health_change));
+	}
+
+	
 	// TODO: OnDamage and OnHeal maybe refactor into a single EventHandler? 
 	// Make damage and such be handeld by the root scene? So that it can be independent from any entities
 	private void OnDamage(int damage)
 	{
-		var playerData = (PlayerData)GetNode("/root/PlayerData");
-		var currentHealth = playerData.currentHealth;
-		currentHealth += damage;
-		playerData.currentHealth = playerData.currentHealth <= 0 ? 0 : currentHealth;
 
-		
+		var calculatedDamage = damage;
 		
 		// floating numbers
 		var floatingDamage = (FloatingText)floatingText.Instantiate();
-		floatingDamage.Amount = damage;
+		floatingDamage.Amount = calculatedDamage;
 		floatingDamage.type = FloatingText.TextType.Damage;
 		AddChild(floatingDamage);
 
-		var globalEvents = (GlobalEvents)GetNode("/root/GlobalEvents");
-		globalEvents.EmitSignal(GlobalEvents.SignalName.PlayerHealthChanged, damage);
+		GetNode<HealthComponent>("HealthComponent").EmitSignal(HealthComponent.SignalName.HealthChange, calculatedDamage);
+
 	}
 	
 	private void OnHeal(int heal)
 	{
-		var playerData = (PlayerData)GetNode("/root/PlayerData");
-		var currentHealth = playerData.currentHealth;
-		currentHealth +=  heal;
-		playerData.currentHealth = currentHealth >= playerData.health ? playerData.health : currentHealth;
-
+		
 		// floating numbers
 		var floatingHeal = (FloatingText)floatingText.Instantiate();
 		floatingHeal.Amount = heal;
 		floatingHeal.type = FloatingText.TextType.Heal;
 		AddChild(floatingHeal);
 
-		var globalEvents = (GlobalEvents)GetNode("/root/GlobalEvents");
-		globalEvents.EmitSignal(GlobalEvents.SignalName.PlayerHealthChanged, heal);
+		GetNode<HealthComponent>("HealthComponent").EmitSignal(HealthComponent.SignalName.HealthChange, heal);
 	}
-
+	
 	private void GetInput(double delta)
 	{
 		Vector2 velocity = Velocity;

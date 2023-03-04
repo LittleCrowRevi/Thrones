@@ -1,54 +1,55 @@
-[gd_scene load_steps=16 format=3 uid="uid://dpr7hi8g3rpck"]
+[gd_scene load_steps=17 format=3 uid="uid://dpr7hi8g3rpck"]
 
-[ext_resource type="Script" path="res://characters/Player/Player.cs" id="1_74mip"]
-[ext_resource type="Texture2D" uid="uid://bxt27ehlkvpof" path="res://characters/Player/red-spritesheet.png" id="2_hctyv"]
+[ext_resource type="Script" path="res://entities/Player/Player.cs" id="1_xuay1"]
+[ext_resource type="Texture2D" uid="uid://bxt27ehlkvpof" path="res://entities/Player/red-spritesheet.png" id="2_kqm5s"]
+[ext_resource type="PackedScene" uid="uid://bnblrxffklpnn" path="res://scripts/components/health_component.tscn" id="3_rdgdk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i3mi6"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_movkd"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vvsfy"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d002h"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yqya1"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4v8lw"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_78n2c"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sih0n"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(224, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jfef5"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(256, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xyo0r"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(288, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4gpn5"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(352, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nc6ck"]
-atlas = ExtResource("2_hctyv")
+atlas = ExtResource("2_kqm5s")
 region = Rect2(384, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jhr7h"]
@@ -111,7 +112,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_74mip")
+script = ExtResource("1_xuay1")
 Speed = 250.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
@@ -122,8 +123,11 @@ polygon = PackedVector2Array(-2, 0, 2, 0, 5, -13, 0, -13, -5, -13)
 scale = Vector2(1.50572, 1.52384)
 sprite_frames = SubResource("SpriteFrames_jhr7h")
 animation = &"idle"
-frame_progress = 0.174399
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, 4)
 zoom = Vector2(3, 3)
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_rdgdk")]
+MaxHealth = 200
+Health = 100

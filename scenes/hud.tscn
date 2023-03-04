@@ -1,16 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://clo83g7ddxup3"]
+[gd_scene load_steps=6 format=3 uid="uid://bi0w5sqodut60"]
 
-[ext_resource type="Texture2D" uid="uid://ckt3spy0fpj5b" path="res://textures/hud/hp-barframe.png" id="1_4omoo"]
-[ext_resource type="Script" path="res://scripts/hud.cs" id="1_ipiby"]
-[ext_resource type="Texture2D" uid="uid://qv15gj548p6m" path="res://textures/hud/hp-barfill.png" id="2_3qi1t"]
-[ext_resource type="FontFile" uid="uid://dilexsjekmt3h" path="res://textures/fonts/VCR_OSD_MONO_1.001.ttf" id="4_8jvvr"]
+[ext_resource type="Texture2D" uid="uid://ckt3spy0fpj5b" path="res://assets/hud/hp-barframe.png" id="1_4omoo"]
+[ext_resource type="Script" path="res://scripts/hud/HUD.cs" id="1_j42hs"]
+[ext_resource type="Texture2D" uid="uid://qv15gj548p6m" path="res://assets/hud/hp-barfill.png" id="2_3qi1t"]
+[ext_resource type="FontFile" uid="uid://dilexsjekmt3h" path="res://assets/fonts/VCR_OSD_MONO_1.001.ttf" id="4_8jvvr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvc02"]
 font = ExtResource("4_8jvvr")
 font_size = 14
 
-[node name="CanvasLayer" type="CanvasLayer"]
-script = ExtResource("1_ipiby")
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_j42hs")
 
 [node name="HP-Bar" type="TextureProgressBar" parent="."]
 offset_left = 513.0

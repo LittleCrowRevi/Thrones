@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qv15gj548p6m"
-path="res://.godot/imported/hp-barfill.png-cb6480d66103b6a53f1bb20516acdd5c.ctex"
+uid="uid://bxt27ehlkvpof"
+path="res://.godot/imported/red-spritesheet.png-01fbdb371cc2ff8b02c2e46040608229.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/hud/hp-barfill.png"
-dest_files=["res://.godot/imported/hp-barfill.png-cb6480d66103b6a53f1bb20516acdd5c.ctex"]
+source_file="res://entities/Player/red-spritesheet.png"
+dest_files=["res://.godot/imported/red-spritesheet.png-01fbdb371cc2ff8b02c2e46040608229.ctex"]
 
 [params]
 

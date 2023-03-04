@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckt3spy0fpj5b"
-path="res://.godot/imported/hp-barframe.png-b177227634da2ea0ae2ad6be66851a55.ctex"
+uid="uid://bx4j68e143l8s"
+path="res://.godot/imported/HP-UISheet.png-fd3a3cbb0da17ff4607ded6fa27aaaa8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/hud/hp-barframe.png"
-dest_files=["res://.godot/imported/hp-barframe.png-b177227634da2ea0ae2ad6be66851a55.ctex"]
+source_file="res://assets/hud/HP-UISheet.png"
+dest_files=["res://.godot/imported/HP-UISheet.png-fd3a3cbb0da17ff4607ded6fa27aaaa8.ctex"]
 
 [params]
 

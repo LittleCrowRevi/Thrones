@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://2bm743ancxl7"
-path="res://.godot/imported/Green Smile.ttf-4c84bafc0e27acaeb5bde93c337a1c70.fontdata"
+uid="uid://dilexsjekmt3h"
+path="res://.godot/imported/VCR_OSD_MONO_1.001.ttf-856c41b5beb75e8fa3ccb5c59022acc8.fontdata"
 
 [deps]
 
-source_file="res://textures/fonts/Green Smile.ttf"
-dest_files=["res://.godot/imported/Green Smile.ttf-4c84bafc0e27acaeb5bde93c337a1c70.fontdata"]
+source_file="res://assets/fonts/VCR_OSD_MONO_1.001.ttf"
+dest_files=["res://.godot/imported/VCR_OSD_MONO_1.001.ttf-856c41b5beb75e8fa3ccb5c59022acc8.fontdata"]
 
 [params]
 

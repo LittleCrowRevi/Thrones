@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8etn4rkcr48"]
+
+[ext_resource type="Script" path="res://scripts/GlobalManager.cs" id="1_1qnmr"]
+[ext_resource type="PackedScene" uid="uid://bi0w5sqodut60" path="res://scenes/hud.tscn" id="2_enpfm"]
+[ext_resource type="PackedScene" uid="uid://dpr7hi8g3rpck" path="res://entities/Player/player.tscn" id="3_x3fbu"]
+[ext_resource type="PackedScene" uid="uid://c0n7ntywrd4do" path="res://scenes/test_screen.tscn" id="4_0nuqn"]
+
+[node name="GlobalManager" type="Node"]
+script = ExtResource("1_1qnmr")
+
+[node name="HUD" parent="." instance=ExtResource("2_enpfm")]
+
+[node name="Player" parent="." instance=ExtResource("3_x3fbu")]
+
+[node name="TestScreen" parent="." instance=ExtResource("4_0nuqn")]

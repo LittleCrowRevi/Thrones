@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx4j68e143l8s"
-path="res://.godot/imported/HP-UISheet.png-530cb5a58f61fddb2191415dc6414065.ctex"
+uid="uid://qv15gj548p6m"
+path="res://.godot/imported/hp-barfill.png-dbddef540f2609d611bcb2ece37ec7c8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/hud/HP-UISheet.png"
-dest_files=["res://.godot/imported/HP-UISheet.png-530cb5a58f61fddb2191415dc6414065.ctex"]
+source_file="res://assets/hud/hp-barfill.png"
+dest_files=["res://.godot/imported/hp-barfill.png-dbddef540f2609d611bcb2ece37ec7c8.ctex"]
 
 [params]
 

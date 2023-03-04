@@ -11,15 +11,14 @@ config_version=5
 [application]
 
 config/name="Thrones"
-run/main_scene="res://scenes/test_screen.tscn"
+run/main_scene="res://scenes/GlobalManager.tscn"
 config/features=PackedStringArray("4.0", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://scenes/global.tscn"
+Global="*res://scenes/global_loader.tscn"
 GlobalEvents="*res://scenes/global_events.tscn"
-PlayerData="*res://characters/Player/player_data.tscn"
 
 [dotnet]
 

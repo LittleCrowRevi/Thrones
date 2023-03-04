@@ -4,8 +4,7 @@ using System;
 public partial class GlobalEvents : Node
 {
 
-	[Signal]
-	public delegate void PlayerHealthChangedEventHandler(int healthValue);
+	[Signal] public delegate void PlayerHealthUpdatedEventHandler(int healthUpdateArray);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
