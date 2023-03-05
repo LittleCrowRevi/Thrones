@@ -8,8 +8,11 @@
 [node name="GlobalManager" type="Node"]
 script = ExtResource("1_1qnmr")
 
+[node name="World" type="Node" parent="."]
+
+[node name="TestScreen" parent="World" instance=ExtResource("4_0nuqn")]
+
 [node name="HUD" parent="." instance=ExtResource("2_enpfm")]
 
 [node name="Player" parent="." instance=ExtResource("3_x3fbu")]
-
-[node name="TestScreen" parent="." instance=ExtResource("4_0nuqn")]
+position = Vector2(256, 151)

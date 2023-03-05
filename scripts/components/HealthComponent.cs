@@ -15,6 +15,10 @@ public partial class HealthComponent : Node
 	public override void _Ready()
 	{
 		Connect(SignalName.HealthChange, new Callable(this, MethodName._health_change));
+	}
+
+	public void Update()
+	{
 		EmitSignal(SignalName.HealthUpdated, 0, Health, MaxHealth);
 	}
 
@@ -24,7 +28,7 @@ public partial class HealthComponent : Node
 	}
 
 	// adds damage, heal etc to the current Health and checks if over Max or below 0 TODO: death check
-	public void _health_change(int changeValue)
+	private void _health_change(int changeValue)
 	{
 		var previousHealth = Health;
 		var newHealth = Health + changeValue;
@@ -33,3 +37,4 @@ public partial class HealthComponent : Node
 		EmitSignal(SignalName.HealthUpdated, previousHealth, Health, MaxHealth);
 	}
 }
+ 

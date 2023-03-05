@@ -1,0 +1,137 @@
+[gd_scene load_steps=17 format=3 uid="uid://c2mmaiwnsitry"]
+
+[ext_resource type="Script" path="res://entities/Enemies/Slime/Slime.cs" id="1_7vtsv"]
+[ext_resource type="PackedScene" uid="uid://bnblrxffklpnn" path="res://scripts/components/health_component.tscn" id="1_b7hsi"]
+[ext_resource type="Texture2D" uid="uid://0y63puha4iv1" path="res://entities/Enemies/Slime/slime-sheet-jump.png" id="2_eja2l"]
+[ext_resource type="Script" path="res://entities/Enemies/Slime/AnimatedSpriteComponent.cs" id="3_k8j6e"]
+[ext_resource type="Texture2D" uid="uid://bl68wsk5ek714" path="res://assets/light/light.png" id="5_mlcnn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyibn"]
+atlas = ExtResource("2_eja2l")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5suok"]
+atlas = ExtResource("2_eja2l")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yo68c"]
+atlas = ExtResource("2_eja2l")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_viu7m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dyibn")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_5suok")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_yo68c")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_5suok")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="Animation" id="Animation_g3fqb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_6hjdb"]
+resource_name = "Idle"
+length = 1.1001
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35, 0.6, 0.8),
+"transitions": PackedFloat32Array(2.92817, 0.5, 0.217637, 0.68302),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t5h4b"]
+_data = {
+"Idle": SubResource("Animation_6hjdb"),
+"RESET": SubResource("Animation_g3fqb")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sbr4b"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2e4wo"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_srb3o"]
+states/Idle/node = SubResource("AnimationNodeAnimation_sbr4b")
+states/Idle/position = Vector2(382, 100)
+states/Start/position = Vector2(254, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_2e4wo")]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_b0idp"]
+
+[node name="Slime" type="CharacterBody2D"]
+script = ExtResource("1_7vtsv")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-4, -6, -4, -6, -7, -3, -7, 2, -5, 5, 5, 5, 6, 3, 6, -3, 3, -6)
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_b7hsi")]
+MaxHealth = 200
+Health = 200
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(-1, 0)
+scale = Vector2(1.1, 1.1)
+sprite_frames = SubResource("SpriteFrames_viu7m")
+animation = &"idle"
+frame_progress = 0.871728
+script = ExtResource("3_k8j6e")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 10
+position = Vector2(-1, 0)
+texture = ExtResource("2_eja2l")
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_t5h4b")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_srb3o")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_b0idp")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -2)
+scale = Vector2(0.625, 0.410156)
+color = Color(0.0901961, 0.129412, 0.556863, 1)
+energy = 0.41
+range_item_cull_mask = 14
+texture = ExtResource("5_mlcnn")
+texture_scale = 0.2

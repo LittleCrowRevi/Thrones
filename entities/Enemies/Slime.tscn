@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2mmaiwnsitry"]
-
-[ext_resource type="PackedScene" uid="uid://bnblrxffklpnn" path="res://scripts/components/health_component.tscn" id="1_7b4bk"]
-
-[node name="Slime" type="Node2D"]
-
-[node name="HealthComponent" parent="." instance=ExtResource("1_7b4bk")]
-MaxHealth = 200
-Health = 200
