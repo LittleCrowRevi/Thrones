@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+// TODO: Fix text color change to all floatingNumbers once a new one is spawned
+// Make this into a global manager?
 public partial class FloatingText : Marker2D	
 {
 

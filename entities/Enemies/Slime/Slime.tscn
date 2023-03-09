@@ -1,10 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://c2mmaiwnsitry"]
+[gd_scene load_steps=23 format=3 uid="uid://c2mmaiwnsitry"]
 
 [ext_resource type="Script" path="res://entities/Enemies/Slime/Slime.cs" id="1_7vtsv"]
 [ext_resource type="PackedScene" uid="uid://bnblrxffklpnn" path="res://scripts/components/health_component.tscn" id="1_b7hsi"]
 [ext_resource type="Texture2D" uid="uid://0y63puha4iv1" path="res://entities/Enemies/Slime/slime-sheet-jump.png" id="2_eja2l"]
 [ext_resource type="Script" path="res://entities/Enemies/Slime/AnimatedSpriteComponent.cs" id="3_k8j6e"]
+[ext_resource type="Shader" path="res://entities/Enemies/Slime/Slime.gdshader" id="5_fuy27"]
 [ext_resource type="Texture2D" uid="uid://bl68wsk5ek714" path="res://assets/light/light.png" id="5_mlcnn"]
+[ext_resource type="Shader" path="res://entities/Enemies/Slime/SlimeLight.gdshader" id="6_l4ha3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dyibn"]
 atlas = ExtResource("2_eja2l")
@@ -37,6 +39,11 @@ animations = [{
 "name": &"idle",
 "speed": 3.0
 }]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eyyw2"]
+shader = ExtResource("5_fuy27")
+shader_parameter/light_color = Color(0.870588, 0.956863, 0.984314, 1)
+shader_parameter/color_modifier = 0.12
 
 [sub_resource type="Animation" id="Animation_g3fqb"]
 length = 0.001
@@ -91,6 +98,19 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_b0idp"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gchlh"]
+frequency = 0.034
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_65fce"]
+noise = SubResource("FastNoiseLite_gchlh")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cxkwi"]
+resource_local_to_scene = true
+shader = ExtResource("6_l4ha3")
+shader_parameter/speed = 1.155
+shader_parameter/light_color = Color(0.321569, 0.623529, 0.843137, 1)
+shader_parameter/noise = SubResource("NoiseTexture2D_65fce")
+
 [node name="Slime" type="CharacterBody2D"]
 script = ExtResource("1_7vtsv")
 
@@ -112,6 +132,7 @@ script = ExtResource("3_k8j6e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 light_mask = 10
+material = SubResource("ShaderMaterial_eyyw2")
 position = Vector2(-1, 0)
 texture = ExtResource("2_eja2l")
 hframes = 3
@@ -130,8 +151,18 @@ parameters/playback = SubResource("AnimationNodeStateMachinePlayback_b0idp")
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(0, -2)
 scale = Vector2(0.625, 0.410156)
-color = Color(0.0901961, 0.129412, 0.556863, 1)
-energy = 0.41
+color = Color(0.235294, 0.352941, 0.65098, 1)
+energy = 0.63
 range_item_cull_mask = 14
 texture = ExtResource("5_mlcnn")
-texture_scale = 0.2
+texture_scale = 0.25
+
+[node name="PointLight2D2" type="Sprite2D" parent="."]
+visible = false
+light_mask = 14
+visibility_layer = 14
+texture_repeat = 2
+material = SubResource("ShaderMaterial_cxkwi")
+position = Vector2(0, -1)
+scale = Vector2(0.125, 0.0839844)
+texture = ExtResource("5_mlcnn")

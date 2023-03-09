@@ -36,7 +36,6 @@ public partial class Player : CharacterBody2D
 	{
 		var HealthComponent = (HealthComponent)GetNode("HealthComponent");
 		
-		//GetNode<GlobalEvents>("/root/GlobalEvents").Connect(GlobalEvents.SignalName.PlayerHealthUpdated, new Callable(HealthComponent, HealthComponent.MethodName._health_change));
 	}
 
 	
@@ -108,14 +107,6 @@ public partial class Player : CharacterBody2D
 		// calculates velocity
 		if (direction != Vector2.Zero)
 		{
-			
-			// TODO: change the sprite itself rather than flip it here
-			if (direction == Vector2.Right)
-			{
-				sprite.FlipH = false;
-			} else if (direction == Vector2.Left) {
-				sprite.FlipH = true;
-			}
 			// Calculates the walking velocity
 			velocity = direction.Normalized() * Speed;
 
@@ -128,7 +119,6 @@ public partial class Player : CharacterBody2D
 		} else {
 			velocity = Vector2.Zero;
 			stateMachine.Travel("Idle");
-
 		}
 		
 		Velocity = velocity;
