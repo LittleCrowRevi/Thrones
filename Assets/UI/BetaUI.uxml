@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/BetaUIStyle.uss?fileID=7433441132597879392&amp;guid=9ebbcc59a7e05c94c887c7dbaed19b6d&amp;type=3#BetaUIStyle" />
+    <ui:VisualElement name="root" class="bg">
+        <ui:VisualElement name="mainMenuParent" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; width: 650px;">
+            <ui:GroupBox name="GroupBox" style="width: 639px; height: 355px; flex-direction: column; align-items: auto; align-self: center; justify-content: flex-end;">
+                <ui:Button text="Resume" display-tooltip-when-elided="true" name="resumeButton" class="button" style="padding-top: 10px; margin-top: 4px; margin-bottom: 0;" />
+                <ui:Button text="Settings" display-tooltip-when-elided="true" name="settingsButotn" class="button" style="padding-top: 10px;" />
+            </ui:GroupBox>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

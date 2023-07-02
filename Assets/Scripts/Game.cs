@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateController : MonoBehaviour
+public class Game : MonoBehaviour
 {
     public enum GameState {
         Loading,
@@ -11,8 +11,17 @@ public class StateController : MonoBehaviour
         InMenu,
     }
 
-    GameObject currentLocation;
+    // Instead save it as a custom Scene class which has position etc too?
+    // then raises an event which triggers loading, hiding of ui and such perhaps?
+    // OR: store scene and location seperately? for more convenient logic of in-scene and between sceenes teleporting
+    private GameObject _currentLocation;
+    GameObject currentLocation {
+        set {
+            _currentLocation = value;
+        }
+    }
     GameObject[] previousLocations = new GameObject[5];
+    private GameObject _currentScene;
     public bool teleporterUsable = false;
     
     private void Awake() 

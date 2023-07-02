@@ -7,6 +7,7 @@ namespace Player {
     public class MovementScript : MonoBehaviour
     {
 
+        // exists to control linear drag/friction during movement
         private bool _isMoving;
         bool isMoving {
             set {
@@ -23,13 +24,33 @@ namespace Player {
                 return _isMoving;
             }
         }
+        public float movingDrag = 10f;
+        public float stopDrag = 50f;        
+
+        private bool _canMove;
+        bool canMove {
+            set {
+                _canMove = value;
+                
+                // if the player can't move...disable movement Controls
+                if (!_canMove)
+                {
+                    this.enabled = !this.enabled;
+                } else
+                {
+                    this.enabled = !this.enabled;
+                }
+            }
+            get {
+                return _canMove;
+            }
+        }
 
         Rigidbody2D body;
-        public float movingDrag = 10f;
-        public float stopDrag = 50f;
         Vector2 direction = Vector2.zero;
         public float movementSpeed = 5000.0F;
         Controls _controls;
+        // WASD constrols
         InputAction move;
 
         private void Awake() 
@@ -37,6 +58,11 @@ namespace Player {
             body = gameObject.GetComponent<Rigidbody2D>() as Rigidbody2D;
             // init generated Control Code
             _controls = new Controls();
+        }
+
+        private void ControlChangeListener()
+        {
+
         }
 
         // enable all controles
@@ -59,7 +85,6 @@ namespace Player {
             
         }
 
-        // Update is called once per frame
         void FixedUpdate()
         {
             if (direction != Vector2.zero) 

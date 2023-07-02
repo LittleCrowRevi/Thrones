@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "openMenu",
+                    "type": "Button",
+                    "id": "e848b69a-7f9b-4f8e-a7f6-d016ecc6aebb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -70,6 +79,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e69029f4-a0f5-407c-aed6-63fcc27eb6de",
+                    "path": "<Keyboard>/esc",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "openMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
