@@ -42,44 +42,17 @@ namespace GlobalPlayer {
         Rigidbody2D body;
         Vector2 direction = Vector2.zero;
         public float movementSpeed = 5000.0F;
-        private Controls _controls;
         // WASD constrols
         InputAction move;
 
         private void Awake() 
         {
             body = gameObject.GetComponent<Rigidbody2D>() as Rigidbody2D;
-            // 
-            gameObject.GetComponent<MenuControls>().OpeningMenu.AddListener(changeMovementState);
-            gameObject.GetComponent<MenuControls>().ClosingMenu.AddListener(changeMovementState);
-
-            // init generated Control Code
-        }
-        private void changeMovementState()
-        {
-            canMove = !canMove;
         }
 
-        // enable all controles
-        private void OnEnable() 
+        void Start()
         {
-            
-            /*move = _controls.Player.Move;
-            move.started += ctx => direction = ctx.ReadValue<Vector2>();
-            move.performed += ctx => direction = ctx.ReadValue<Vector2>();
-            move.canceled += ctx => direction = ctx.ReadValue<Vector2>();
-            move.Enable();*/
-            
-        }
-
-        private void OnDisable()
-        {
-            //move.Disable();
-        }
-
-        void OnMove(InputValue value)
-        {
-            direction = value.Get<Vector2>();
+            canMove = true;
         }
 
         void FixedUpdate()
@@ -94,6 +67,26 @@ namespace GlobalPlayer {
             {
                 isMoving = false;
             }
+        }
+        private void changeMovementState()
+        {
+            canMove = !canMove;
+        }
+
+        // enable all controles
+        private void OnEnable() 
+        { 
+
+        }
+
+        private void OnDisable()
+        {
+
+        }
+
+        void OnMove(InputValue value)
+        {
+            direction = value.Get<Vector2>();
         }
 
         void OnCollisionEnter2D(Collision2D other) => OnCollisionHandle(other);
