@@ -3,41 +3,61 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class MenuControls : MonoBehaviour
 {
 
     GameObject player;
+    UIDocument ui;
 
-    private void Awake() 
+    void OnEnable()
     {
+        ui = GetComponent<UIDocument>();
         BindPlayerEventsToUI();
-
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
     }
 
     public void OnOpeningMenu()
     {
-        Debug.Log("UI LOG");
+        // why is this called twice when not done through Unity Interface?
+        if (ui != null)
+        {
+            ui.rootVisualElement.RemoveFromClassList("hidden");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnClosingMenu()
     {
-        
+        if (!ui.rootVisualElement.ClassListContains("hidden"))
+        {
+            ui.rootVisualElement.AddToClassList("hidden");
+        }
     }
 
+    // not needed since doing it through unity is better?
     void BindPlayerEventsToUI()
     {
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
         }
-        player.GetComponent<Player>().OpeningMenu.AddListener(OnOpeningMenu);
+        if (ui != null)
+        {
+            Button _button = ui.rootVisualElement.Q<Button>("resumeButton");
+            _button.RegisterCallback<NavigationMoveEvent>(e =>
+        {
+            if (e.direction == NavigationMoveEvent.Direction.Down) return;
+            e.PreventDefault();
+        });
+            _button.clicked += () => 
+            {
+                Debug.Log("resume button debug");
+                player.GetComponent<Player>().InvokeEvents(1);
+            };
+
+        }
+        //player.GetComponent<Player>().OpeningMenu.AddListener(OnOpeningMenu);
+        //player.GetComponent<Player>().OpeningMenu.AddListener(OnClosingMenu);
+
     }
 }

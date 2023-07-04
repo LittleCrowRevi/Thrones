@@ -1,6 +1,6 @@
 .bg {
     flex-grow: 1;
-    background-color: rgba(0, 0, 0, 0.863);
+    background-color: rgba(0, 0, 0, 0.87);
     align-items: center;
     justify-content: center;
 }
@@ -31,4 +31,8 @@
 
 .button:hover {
     color: rgb(255, 255, 255);
+}
+
+.hidden {
+    display: none;
 }

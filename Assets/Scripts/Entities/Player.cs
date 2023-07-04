@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+// TODO: Refactor controls to the GameControl Object?
 public class Player : MonoBehaviour
 {
     
@@ -20,6 +21,21 @@ public class Player : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void InvokeEvents(int id)
+    {
+        Debug.Log("Invoking Player Events");
+        switch(id)
+        {
+            case 0:
+                OnOpenMenu();
+                break;
+            
+            case 1:
+                OnCloseMenu();
+                break;
+        }
     }
 
         // TODO: checks for which menun can be openen...if it can be opened etc?
