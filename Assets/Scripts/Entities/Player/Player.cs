@@ -5,11 +5,15 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 // TODO: Refactor controls to the GameControl Object?
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IEntities
 {
     
     public UnityEvent OpeningMenu;
     public UnityEvent ClosingMenu;
+
+    public int Level { get; set; }
+    public int HealthPoints { get; set; }
+    public int AttackPoints { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +42,8 @@ public class Player : MonoBehaviour
         }
     }
 
-        // TODO: checks for which menun can be openen...if it can be opened etc?
+    // TODO: checks for which menun can be openen...if it can be opened etc?
+    // Input Events
     void OnOpenMenu()
     {
         Debug.Log("[010101] Opening Menu!");
