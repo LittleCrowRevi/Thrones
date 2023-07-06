@@ -34,7 +34,6 @@ public class MenuControls : MonoBehaviour
         }
     }
 
-    // not needed since doing it through unity is better?
     void BindPlayerEventsToUI()
     {
         if (player == null)
@@ -44,11 +43,6 @@ public class MenuControls : MonoBehaviour
         if (ui != null)
         {
             Button _button = ui.rootVisualElement.Q<Button>("resumeButton");
-            _button.RegisterCallback<NavigationMoveEvent>(e =>
-        {
-            if (e.direction == NavigationMoveEvent.Direction.Down) return;
-            e.PreventDefault();
-        });
             _button.clicked += () => 
             {
                 Debug.Log("resume button debug");
