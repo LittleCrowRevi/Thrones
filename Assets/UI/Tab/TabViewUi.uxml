@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/UI/BetaUIStyle.uss?fileID=7433441132597879392&amp;guid=9ebbcc59a7e05c94c887c7dbaed19b6d&amp;type=3#BetaUIStyle" />
+    <ui:VisualElement name="root" class="bg" style="flex-grow: 1; -unity-font: resource(&apos;Fonts/FredokaOne-Regular&apos;); -unity-font-definition: initial;">
+        <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); justify-content: space-around; align-items: stretch; align-self: center; width: 564px;">
+            <ui:ListView focusable="true" style="align-self: center; justify-content: center; width: 400px; align-items: stretch; -unity-text-align: upper-left; height: 490px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

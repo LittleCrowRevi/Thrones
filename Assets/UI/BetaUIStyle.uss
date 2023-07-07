@@ -1,6 +1,6 @@
 .bg {
     flex-grow: 1;
-    background-color: rgba(0, 0, 0, 0.87);
+    background-color: rgba(0, 0, 0, 0.89);
     align-items: center;
     justify-content: center;
 }
@@ -27,6 +27,7 @@
     border-bottom-color: rgba(0, 0, 0, 0);
     -unity-font: resource('Fonts/FredokaOne-Regular');
     -unity-font-definition: initial;
+    font-size: 22px;
 }
 
 .button:hover {
@@ -39,4 +40,10 @@
 
 .button:focus {
     color: rgb(255, 255, 255);
+}
+
+.list-label {
+    color: rgb(255, 255, 255);
+    font-size: 22px;
+    align-self: center;
 }
