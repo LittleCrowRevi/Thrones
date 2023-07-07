@@ -679,7 +679,7 @@
                 {
                     "name": "",
                     "id": "1eb81507-e90b-443e-b105-6f3cce9b753b",
-                    "path": "*/{Submit}",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -746,7 +746,7 @@
                     "name": "",
                     "id": "291c65c3-4e86-4c21-9da4-36595088a3fd",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Click",
@@ -849,6 +849,11 @@
             "name": "Keyboard&Mouse",
             "bindingGroup": "Keyboard&Mouse",
             "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                },
                 {
                     "devicePath": "<Keyboard>",
                     "isOptional": false,
