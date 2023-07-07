@@ -6,7 +6,7 @@
             "id": "66eb95b2-b9eb-44bc-854f-379828f62741",
             "actions": [
                 {
-                    "name": "OpenMenu",
+                    "name": "OpenMainMenu",
                     "type": "Button",
                     "id": "b33b4da2-95d4-4cb6-849b-b7df47a56cbc",
                     "expectedControlType": "Button",
@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenTabMenu",
+                    "type": "Button",
+                    "id": "49004745-9097-4270-bc48-0419ee6ffa58",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -50,7 +59,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "OpenMenu",
+                    "action": "OpenMainMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -273,6 +282,17 @@
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5955a048-2589-49a0-8243-3f87a9d471b1",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenTabMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -281,7 +301,7 @@
             "id": "5ba20f6a-0b55-43f0-92ed-be83e19742d3",
             "actions": [
                 {
-                    "name": "CloseMenu",
+                    "name": "Close",
                     "type": "Button",
                     "id": "81fa9ba2-bfb3-4ed9-bcc3-e7ef86c75ecf",
                     "expectedControlType": "Button",
@@ -388,7 +408,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "CloseMenu",
+                    "action": "Close",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

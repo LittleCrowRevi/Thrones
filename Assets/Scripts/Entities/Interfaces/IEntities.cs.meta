@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< Updated upstream:Assets/Scripts/Controls/Controls.cs.meta
+guid: 75497c7e5c6b1044a962e8b3b0fc7a21
+========
+guid: 1522dd25de68d6f41a50d2e8511a6471
+>>>>>>>> Stashed changes:Assets/Scripts/Entities/Interfaces/IEntities.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
