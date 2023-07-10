@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 using Thrones.Scripts.UI;
 using Unity.VisualScripting;
 using UnityEngine.EventSystems;
+using static Thrones.Scripts.Utilities.Util;
 
 //TODO: https://forum.unity.com/threads/global-pointer-events.283895/
 //      System to handle selecting UI better
@@ -21,17 +22,20 @@ public class UIController : MonoBehaviour
         set {
             _activeMenu?.SetActive(false);
             _activeMenu = value;
-            _activeMenu.SetActive(true);
-        }
-        get {
+            if (!_activeMenu.activeSelf)
+                {
+                    _activeMenu.SetActive(true);
+                }
+            }
+            get {
             return _activeMenu;
         }
     }
 
     void OnEnable()
     {
-        mainMenu = GameObject.Find("MainMenu");
-        ActiveMenu = mainMenu;
+        mainMenu = FindChildObject(gameObject, "MainMenu");
+        _activeMenu = mainMenu;
         BindPlayerEventsToUI();
 
     }
@@ -70,6 +74,5 @@ public class UIController : MonoBehaviour
         player.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
         Debug.Log("[0201] Changed Player Input to: " + player.GetComponent<PlayerInput>().currentActionMap.ToString());
     }
-
 
 }
