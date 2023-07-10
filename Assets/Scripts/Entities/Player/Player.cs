@@ -10,9 +10,6 @@ using Thrones.Scripts.UI;
 public class Player : IEntities
 {
 
-    public UnityEvent<InterfaceID> OpeningMenu;
-    public UnityEvent ClosingMenu;
-
     private void Awake() 
     {
         CreateNewPlayer();    
@@ -35,12 +32,12 @@ public class Player : IEntities
 
     void OnOpenMainMenu()
     {
-        OpeningMenu.Invoke(InterfaceID.MainMenu);
+        GameObject.Find("Game").GetComponent<Game>().OpeningMenu.Invoke(InterfaceID.MainMenu);
     }
 
     void OnClose()
     {
-        ClosingMenu.Invoke();
+        GameObject.Find("Game").GetComponent<Game>().ClosingMenu.Invoke();
     }
 
 }

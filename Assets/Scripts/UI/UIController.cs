@@ -64,7 +64,7 @@ public class UIController : MonoBehaviour
                 break;
         }
         player.GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
-        Debug.Log("[0201] Changed Player Input to: " + player.GetComponent<PlayerInput>().currentActionMap.ToString());
+        Debug.Log("[0201] Set Player Input to: " + player.GetComponent<PlayerInput>().currentActionMap.ToString());
     }
 
     public void CloseActiveMenu() 
@@ -72,7 +72,7 @@ public class UIController : MonoBehaviour
         Debug.Log("[010102] Closing Menu!");
         ActiveMenu.SetActive(false);
         player.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
-        Debug.Log("[0201] Changed Player Input to: " + player.GetComponent<PlayerInput>().currentActionMap.ToString());
+        Debug.Log("[0201] Set Player Input to: " + player.GetComponent<PlayerInput>().currentActionMap.ToString());
     }
 
 }
