@@ -5,12 +5,11 @@ using UnityEngine;
 public class GlobalCamera : MonoBehaviour
 {
 
-    [SerializeField]
-    GameObject trackedEntity;
-    Vector3 velocity;
-    [SerializeField]
+    [SerializeField] GameObject trackedEntity;
     // how fast the camera follows the trackedEntity
-    float updateSpeed = 0.2F;
+    [SerializeField] float updateSpeed = 0.2F;
+
+    Vector3 velocity;
     Vector3 trackedOffset;
 
     void Start()

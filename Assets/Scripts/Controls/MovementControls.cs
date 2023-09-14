@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace GlobalPlayer {
-    public class MovementScript : MonoBehaviour
+    public class MovementControls : MonoBehaviour
     {
 
         // exists to control linear drag/friction during movement
@@ -42,12 +42,10 @@ namespace GlobalPlayer {
         Rigidbody2D body;
         Vector2 direction = Vector2.zero;
         public float movementSpeed = 5000.0F;
-        // WASD constrols
-        InputAction move;
 
         private void Awake() 
         {
-            body = gameObject.GetComponent<Rigidbody2D>() as Rigidbody2D;
+            body = gameObject.GetComponent<Rigidbody2D>();
         }
 
         void Start()
@@ -73,26 +71,16 @@ namespace GlobalPlayer {
             canMove = !canMove;
         }
 
-        // enable all controles
-        private void OnEnable() 
-        { 
-
-        }
-
-        private void OnDisable()
-        {
-
-        }
-
-        void OnMove(InputValue value)
+        public void OnMove(InputValue value)
         {
             direction = value.Get<Vector2>();
         }
 
-        void OnCollisionEnter2D(Collision2D other) => OnCollisionHandle(other);
+        void OnTriggerEnter2D(Collider2D collision) => OnCollisionHandle(collision);
 
-        void OnCollisionHandle(Collision2D other) {
-            Debug.Log(other);
+        void OnCollisionHandle(Collider2D collision) {
+
+            //Debug.Log(collision);
         }
 
     }

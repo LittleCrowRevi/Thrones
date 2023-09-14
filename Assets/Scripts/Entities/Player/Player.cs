@@ -5,39 +5,43 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Thrones.Entities.Interfaces;
 using Thrones.Scripts.UI;
+using static Thrones.Utilities.Util;
 
-// TODO: Refactor controls to the GameControl Object?
-public class Player : IEntities
+namespace Thrones.Entities
 {
 
-    private void Awake() 
+    // TODO: Refactor controls to the GameControl Object?
+    public class Player : IEntities
     {
-        CreateNewPlayer();    
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        private void Awake() 
+        {
+            CreateNewPlayer();    
+        }
 
-    // TODO: checks for which menun can be openen...if it can be opened etc?
-    // Input Events
-    public void CreateNewPlayer()
-    {
-        Level = 0;
-        MaxHealthPoints = 100;
-        AttackPoints = 10;
-    }
+        // TODO: checks for which menu can be openen...if it can be opened etc?
+        // Input Events
+        public void CreateNewPlayer()
+        {
+            Level = 0;
+            MaxHealthPoints = 100;
+            AttackPoints = 10;
+        }
 
-    void OnOpenMainMenu()
-    {
-        GameObject.Find("Game").GetComponent<Game>().OpeningMenu.Invoke(InterfaceID.MainMenu);
-    }
+        void OnOpenMainMenu()
+        {
+            GameRef().OnOpeningMenu.Invoke(InterfaceID.MainMenu);
+        }
 
-    void OnClose()
-    {
-        GameObject.Find("Game").GetComponent<Game>().ClosingMenu.Invoke();
-    }
+        void OnClose()
+        {
+            GameRef().OnClosingMenu.Invoke();
+        }
 
+        void OnOpenTabMenu()
+        {
+            GameRef().OnOpeningMenu.Invoke(InterfaceID.TabMenu);
+        }
+
+    }
 }

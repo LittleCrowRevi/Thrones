@@ -1,3 +1,5 @@
+using Assets.Scripts;
+using Assets.Scripts.States;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,67 +10,92 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class Game : MonoBehaviour
+public class Game: MonoBehaviour
 {
-    public UnityEvent<float, String> LoadingProgress;
-    public UnityEvent<String> NotifySceneChange;
-    public UnityEvent<InterfaceID> OpeningMenu;
-    public UnityEvent ClosingMenu;
 
-    public enum GameState {
+    /// State Enum
+    public enum State
+    {
         Loading,
-        InDungeon,
-        InBattle,
-        InMenu,
+        Menu,
+        Exploration,
+        Combat,
     }
-    public bool teleporterUsable = false;
 
-    // Instead save it as a custom Scene class which has position etc too?
-    // then raises an event which triggers loading, hiding of ui and such perhaps?
-    // OR: store scene and location seperately? for more convenient logic of in-scene and between sceenes teleporting
-    private GameObject _currentLocation;
-    GameObject[] previousLocations = new GameObject[5];
-    // stroing a reference to the scene doesnt quite work...
-    String _activeScene;
-    public String activeScenePath
+    /// Unity Events
+
+    [field: SerializeField] public UnityEvent<float, string> LoadingProgress { get; set; }
+    [field: SerializeField] public UnityEvent<string, State> NotifyLoadScene { get; set; }
+    [field: SerializeField] public UnityEvent<InterfaceID> OnOpeningMenu { get; set; }
+    [field: SerializeField] public UnityEvent OnClosingMenu { get; set; }
+
+    /// Data fields
+
+    public string ActiveScenePath { get; set; }
+    public string previousScenePath { get; set; }
+
+    /// Game Objects
+
+    [field: SerializeField] public GameObject LoadingScreen { get; set; }
+
+    /// State Stack
+
+    public LoadingState LoadingState { get; set; }
+    public ExplorationState ExplorationState { get; set; }
+    public StateManager StateManager { get; set; }
+
+    /// Methods
+
+    // Gameloop methods
+    private void Awake()
     {
-        get { return _activeScene; }
-        set { _activeScene = value; }
+        StateManager = new();
+        LoadingState = new(StateManager);
+        ExplorationState = new(StateManager);
     }
 
-    public String previousScenePath;
-    public GameObject LoadingScreen;
-    public GameObject MainMenu;
-
-    private void Awake() 
-    {
-    }
-    // Start is called before the first frame update
     void Start()
     {
-        NotifySceneChange.Invoke("Dungeon");
-        OpeningMenu.Invoke(InterfaceID.MainMenu);
+        InitGame();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            NotifySceneChange.Invoke("Dungeon-E2");
-        }
         if (Input.GetKeyDown(KeyCode.U))
         {
-            NotifySceneChange.Invoke("Dungeon");
+            Debug.Log("U: " + StateManager.CurrentState.Name);
+            NotifyLoadScene.Invoke("EX.Dungeon", State.Exploration);
         }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Debug.Log(StateManager.CurrentState.Name);
+        }
+
+        StateManager.Update();
     }
 
-    public void OnSceneChange(String newScenePath)
+    // regular methods
+    void InitGame()
     {
+        LoadingState.NewScenePath = "EX.Dungeon";
+        LoadingState.NextState = ExplorationState;
         LoadingScreen.SetActive(true);
-       
-        Debug.Log("[Loading] Changing Scene from [" + activeScenePath + "] to [" +  newScenePath + "]");
-        StartCoroutine(AsyncLoadNewScene(newScenePath));
+        StateManager.InitialState(LoadingState);
+        OnOpeningMenu.Invoke(InterfaceID.MainMenu);
+    }
+
+    public void OnSceneLoad(string newScenePath, State nextStateType)
+    {
+        LoadingState.NewScenePath = newScenePath;
+        LoadingState.NextState = nextStateType switch
+        {
+            State.Exploration => ExplorationState,
+            State.Loading => LoadingState,
+            _ => throw new NotImplementedException(),
+        };
+        LoadingScreen.SetActive(true);
+        Debug.Log(LoadingState.NewScenePath);
+        StateManager.OnTransition(true, LoadingState);
     }
 
     IEnumerator AsyncLoadNewScene(string newScenePath)
@@ -82,8 +109,8 @@ public class Game : MonoBehaviour
             if (asyncLoad.progress >= 0.9f)
             {
                 asyncLoad.allowSceneActivation = true;
-                previousScenePath = activeScenePath;
-                activeScenePath = newScenePath;
+                previousScenePath = ActiveScenePath;
+                ActiveScenePath = newScenePath;
 
                 if (previousScenePath != null)
                 {
@@ -96,7 +123,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    IEnumerator AsyncUnloadScene(String scene) 
+    IEnumerator AsyncUnloadScene(string scene) 
     {
         AsyncOperation asyncUnoad = SceneManager.UnloadSceneAsync(scene);
         while (!asyncUnoad.isDone)

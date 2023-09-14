@@ -43,3 +43,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Foundation
+    uniqueID: 864901355
+    locked: 0
+  - name: Floor
+    uniqueID: 2668763875
+    locked: 0
+  - name: Z-1 Ground
+    uniqueID: 2886927643
+    locked: 0
+  - name: Z-2
+    uniqueID: 2679185943
+    locked: 0
+  - name: Z-3
+    uniqueID: 3478879131
+    locked: 0
