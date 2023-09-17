@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dym6ffsyq4m1e"]
+
+[ext_resource type="Texture2D" uid="uid://c0klimc48u1e4" path="res://Resources/Sprites/tilemaps/v2/grass/grass-tiles-01.png" id="1_wrjdh"]
+[ext_resource type="PackedScene" uid="uid://dlxyd56yh5vwh" path="res://Scenes/Entities/red.tscn" id="2_6thtr"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mxy8c"]
+resource_name = "Grass"
+texture = ExtResource("1_wrjdh")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_3r3yk"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(64, 32)
+sources/1 = SubResource("TileSetAtlasSource_mxy8c")
+
+[node name="DevLevel" type="Node"]
+
+[node name="TileMap" type="TileMap" parent="."]
+y_sort_enabled = true
+tile_set = SubResource("TileSet_3r3yk")
+format = 2
+layer_0/y_sort_enabled = true
+layer_0/tile_data = PackedInt32Array(-131072, 1, 0, -1, 1, 0, -196608, 1, 0, -262143, 1, 0, -65536, 1, 0, -131071, 1, 0, -196607, 1, 0, -327680, 1, 0, -262144, 1, 0, -65537, 1, 0, -131073, 1, 0, -196609, 1, 0, -262145, 1, 0, -262146, 1, 0, -196610, 1, 0, -2, 1, 0, -65538, 1, 0, -131074, 1, 0, -196611, 1, 0, -327679, 1, 0, -65535, 1, 0, -65539, 1, 0, -3, 1, 0, -131075, 1, 0, -196612, 1, 0, -262148, 1, 0, -262147, 1, 0, -131076, 1, 0, -65540, 1, 0, -4, 1, 0, 262142, 1, 0, 65532, 1, 0, 65533, 1, 0, 65534, 1, 0, 65535, 1, 0, 1, 1, 0, 0, 1, 0, 131071, 1, 0, 131070, 1, 0, 196606, 1, 0, 196605, 1, 0, 131069, 1, 0, 196607, 1, 0, 262141, 1, 0, 262143, 1, 0)
+
+[node name="Entities" type="Node" parent="."]
+
+[node name="Red" parent="Entities" instance=ExtResource("2_6thtr")]

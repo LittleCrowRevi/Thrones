@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dlxyd56yh5vwh"]
+
+[ext_resource type="Texture2D" uid="uid://lkcrge3yk580" path="res://Resources/Sprites/red/red-sprite-sheet.png" id="1_5elvs"]
+[ext_resource type="Script" path="res://Scripts/Components/EntityControlComponent.cs" id="2_px17j"]
+[ext_resource type="PackedScene" uid="uid://035y4d4ww2k2" path="res://Scenes/state_manager.tscn" id="3_ekllq"]
+
+[node name="Red" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -13)
+texture = ExtResource("1_5elvs")
+hframes = 16
+frame = 4
+
+[node name="StateManager" parent="." instance=ExtResource("3_ekllq")]
+
+[node name="EntityControlComponent" type="Node" parent="."]
+script = ExtResource("2_px17j")
+Speed = 150.0
