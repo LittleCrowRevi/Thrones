@@ -11,13 +11,13 @@ namespace Thrones
     {
         /// nodes
 
-        [Export] public Camera2D Camera { get; set; }
+        [Export] public GlobalCamera Camera { get; set; }
         [Export] public Node World { get; set; }
         [Export] public SceneLoader sceneLoader { get; set; }
 
         /// signals
 
-        [Signal] public delegate void ChangeControlledPCEventHandler(Node target);
+        [Signal] public delegate void ChangeControlledPCEventHandler(Node2D target);
 
         /// states
 
@@ -38,21 +38,35 @@ namespace Thrones
 
         public override void _Process(double delta)
         {
+            
         }
 
         private async void InitGame()
         {
             Logger.INFO("Initializing Game");
 
+            // Load Control Nodes
+            stateManager = new StateManager();
+            AddChild(stateManager);
+
+            Camera = new GlobalCamera();
+            ChangeControlledPC += Camera.OnChangeTarget;
+            AddChild(Camera);
+
+            sceneLoader = new SceneLoader();
+            AddChild(sceneLoader);
+
             // Load Player Characters
-            var player = sceneLoader.LoadEntity(Paths.RedPlayer);
+            var player = await SceneLoader.LoadEntity(Paths.RedPlayer);
+            ControlledCharacter = ((PackedScene)player).Instantiate();
+            EmitSignal(SignalName.ChangeControlledPC, ControlledCharacter);
 
             // Load Last Active Scene
             sceneLoader.EmitSignal(SceneLoader.SignalName.InitLoadScene, "res://Scenes/Levels/dev_level.tscn", true);
-            ChangeControlledPC += Camera.GetScript().As<GlobalCamera>().OnChangeTarget;
 
-            ExplorationState exState = new(stateManager, this);
-            stateManager.InitialState(exState);
+            // TODO: fix states
+            //ExplorationState exState = new(stateManager, this);
+            //stateManager.InitialState(exState);
         }
 
         public static GameManager GetGameScript(Node node)

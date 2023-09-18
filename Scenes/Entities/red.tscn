@@ -8,6 +8,7 @@
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -13)
+scale = Vector2(1.1, 1.1)
 texture = ExtResource("1_5elvs")
 hframes = 16
 frame = 4
@@ -17,3 +18,5 @@ frame = 4
 [node name="EntityControlComponent" type="Node" parent="."]
 script = ExtResource("2_px17j")
 Speed = 150.0
+
+[node name="CameraAnchor" type="RemoteTransform2D" parent="."]

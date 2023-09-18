@@ -1,34 +1,49 @@
 using Godot;
+using ThronesEra;
 
 namespace Thrones.Scripts
 {
     public partial class GlobalCamera : Camera2D
     {
         /// data
-
-        private Node Target { get; set; }
+        private Node2D _Target;
+        private Node2D Target
+        {
+            get { return _Target; }
+            set
+            {
+                Logger.INFO("setting target");
+                _Target = value;
+            }
+        }
 
         /// signals
 
-        [Signal] public delegate void ChangeTargetEventHandler(Node newTarget);
+        /// Methods
 
-        // Methods
-        // Called when the node enters the scene tree for the first time.
+        public GlobalCamera()
+        {
+            Name = "GlobalCamera";
+        }
         public override void _Ready()
         {
-            ChangeTarget += OnChangeTarget;
+            MakeCurrent();
+            
         }
 
         // Called every frame. 'delta' is the elapsed time since the previous frame.
         public override void _Process(double delta)
         {
-            Position = (Vector2)Target.Get(PropertyName.Transform);
+            
         }
 
-        public void OnChangeTarget(Node newTarget)
+        public void OnChangeTarget(Node2D newTarget)
         {
+            Logger.INFO("Changing Camera Target");
             Target = newTarget;
-            Position = (Vector2)Target.Get(PropertyName.Transform);
+            var anchor = (RemoteTransform2D)Target.GetNode("CameraAnchor");
+            // TODO: fix positioning
+            anchor.RemotePath = this.GetPathTo(anchor);
         }
     }
 }

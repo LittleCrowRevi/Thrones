@@ -1,4 +1,7 @@
 ﻿using Godot;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using ThronesEra;
 
 namespace Thrones.Util
@@ -15,6 +18,11 @@ namespace Thrones.Util
 
         /// Methods
 
+        public SceneLoader()
+        {
+            this.Name = "SceneLoader";
+        }
+
         public override void _Ready()
         {
             Viewport root = GetTree().Root;
@@ -23,20 +31,16 @@ namespace Thrones.Util
             InitLoadScene += GotoScene;
         }
 
-        public PackedScene LoadEntity(string entityPath)
+        public static async Task<Resource> LoadEntity(string entityPath)
         {
             ResourceLoader.LoadThreadedRequest(entityPath);
-            var entity = AsyncLoadEntity(entityPath);
-            return entity;
-        }
 
-        private PackedScene AsyncLoadEntity(string entityPath)
-        {
             while (ResourceLoader.LoadThreadedGetStatus(entityPath) != ResourceLoader.ThreadLoadStatus.Loaded)
             {
-                Logger.INFO($"Loading {entityPath}");
+                await Task.Delay(500);
             }
-            return (PackedScene)ResourceLoader.LoadThreadedGet(entityPath);
+
+            return ResourceLoader.LoadThreadedGet(entityPath);
         }
 
         public void GotoScene(string path, bool unloadPrevious)
