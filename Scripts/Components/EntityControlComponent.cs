@@ -3,29 +3,29 @@ using System;
 
 namespace Thrones.Components
 {
-	public partial class EntityControlComponent : Node
-	{
+    public partial class EntityControlComponent : Node
+    {
         /// Data
-		
-		// Movement Speed
+
+        // Movement Speed
         [Export] public float Speed = 300.0f;
+
         // Min and Max Zoom
         private Vector2 ZoomLevels = new(2.5f, 5.0f);
 
         public bool CanMove { get; set; }
 
-		/// Nodes
-		
-		Camera2D Camera;
-		Sprite2D Sprite;
-        AnimationTree AnimTree;
-        CharacterBody2D Entity;
+        /// Nodes
 
+        private Camera2D Camera;
+        private Sprite2D Sprite;
+        private AnimationTree AnimTree;
+        private CharacterBody2D Entity;
 
         /// Methods
 
         public override void _Ready()
-		{
+        {
             Viewport root = GetTree().Root;
             Camera = root.GetNode<Node>("GameManager").GetNode<Camera2D>("GlobalCamera");
 
@@ -44,30 +44,30 @@ namespace Thrones.Components
         }
 
         public override void _PhysicsProcess(double delta)
-		{
+        {
             Movement();
             Entity.MoveAndSlide();
         }
 
         public void CameraZoom()
-		{
-			// Zoom Action
-			if (Input.IsActionJustReleased("scroll_up"))
-			{
-				Vector2 currentZoom = Camera.Zoom;
-				float clampedZoom = Math.Clamp(currentZoom.X * 1.1f, ZoomLevels.X, ZoomLevels.Y);
-				Camera.Zoom = new Vector2(clampedZoom, clampedZoom);
-			}
-			if (Input.IsActionJustReleased("scroll_down"))
-			{
-				Vector2 currentZoom = Camera.Zoom;
-				float clampedZoom = Math.Clamp(currentZoom.X * 0.8f, ZoomLevels.X, ZoomLevels.Y);
-				Camera.Zoom = new Vector2(clampedZoom, clampedZoom);
-			}
-		}
+        {
+            // Zoom Action
+            if (Input.IsActionJustReleased("scroll_up"))
+            {
+                Vector2 currentZoom = Camera.Zoom;
+                float clampedZoom = Math.Clamp(currentZoom.X * 1.1f, ZoomLevels.X, ZoomLevels.Y);
+                Camera.Zoom = new Vector2(clampedZoom, clampedZoom);
+            }
+            if (Input.IsActionJustReleased("scroll_down"))
+            {
+                Vector2 currentZoom = Camera.Zoom;
+                float clampedZoom = Math.Clamp(currentZoom.X * 0.8f, ZoomLevels.X, ZoomLevels.Y);
+                Camera.Zoom = new Vector2(clampedZoom, clampedZoom);
+            }
+        }
 
-		public void Movement()
-		{
+        public void Movement()
+        {
             if (!CanMove)
             {
                 return;
@@ -75,9 +75,8 @@ namespace Thrones.Components
             AnimationNodeStateMachinePlayback stateMachine = (AnimationNodeStateMachinePlayback)AnimTree?.Get("parameters/playback");
 
             Vector2 velocity = Entity.Velocity;
-            // Get the input direction and handle the movement/deceleration.
             Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-            Console.WriteLine(direction);
+
             // Changes the walking animation based on velocity input and
             // calculates velocity
             if (direction != Vector2.Zero)
@@ -99,6 +98,5 @@ namespace Thrones.Components
 
             Entity.Velocity = velocity;
         }
-	}
+    }
 }
-

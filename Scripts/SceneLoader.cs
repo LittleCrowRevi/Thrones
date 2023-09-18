@@ -1,12 +1,10 @@
 ﻿using Godot;
-using System;
-
+using ThronesEra;
 
 namespace Thrones.Util
 {
     public partial class SceneLoader : Node
     {
-        
         // Signals
 
         [Signal] public delegate void InitLoadSceneEventHandler(string sceneName, bool unloadScene);
@@ -14,17 +12,31 @@ namespace Thrones.Util
         // Data
 
         public Node ActiveScene { get; set; }
-        
 
-        // Methods 
+        // Methods
 
         public override void _Ready()
         {
             Viewport root = GetTree().Root;
             ActiveScene = root.GetNode<Node>("GameManager").GetNode("World").GetChildOrNull<Node>(0);
-            GD.Print($"[INFO] current scene: {ActiveScene?.Name}");
 
             InitLoadScene += GotoScene;
+        }
+
+        public PackedScene LoadEntity(string entityPath)
+        {
+            ResourceLoader.LoadThreadedRequest(entityPath);
+            var entity = AsyncLoadEntity(entityPath);
+            return entity;
+        }
+
+        private PackedScene AsyncLoadEntity(string entityPath)
+        {
+            while (ResourceLoader.LoadThreadedGetStatus(entityPath) != ResourceLoader.ThreadLoadStatus.Loaded)
+            {
+                Logger.INFO($"Loading {entityPath}");
+            }
+            return (PackedScene)ResourceLoader.LoadThreadedGet(entityPath);
         }
 
         public void GotoScene(string path, bool unloadPrevious)
@@ -49,10 +61,9 @@ namespace Thrones.Util
 
             ActiveScene = nextScene.Instantiate();
 
-            GetTree().Root.AddChild(ActiveScene);
-            
-            GetTree().CurrentScene = ActiveScene;
+            GetTree().Root.GetNode("GameManager/World").AddChild(ActiveScene);
 
+            Logger.INFO($"Loaded new scene: {ActiveScene.Name}");
         }
     }
 }

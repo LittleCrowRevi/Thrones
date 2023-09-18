@@ -1,16 +1,15 @@
-using Thrones.Scripts.States;
-using System;
-using System.Collections.Generic;
 using Godot;
+using System.Collections.Generic;
+using Thrones.Scripts.States;
 
 namespace Thrones.Scripts
 {
     // implement transition methods? from to?
     public partial class StateManager : Node
     {
-
         // Data Fields
         private Stack<IState> stateStack;
+
         public IState CurrentState => stateStack?.Peek();
         private List<Transition> Transitions;
 
@@ -22,6 +21,11 @@ namespace Thrones.Scripts
             stateStack = new Stack<IState>();
             Transitions = new List<Transition>();
             StateChange += OnTransition;
+        }
+
+        public override void _Process(double delta)
+        {
+            Update();
         }
 
         public void Update()
@@ -46,6 +50,7 @@ namespace Thrones.Scripts
                             ReplaceState(transitionItem.Next);
                             Transitions.Remove(transitionItem);
                             break;
+
                         case false:
                             AddState(transitionItem.Next);
                             Transitions.Remove(transitionItem);
@@ -68,7 +73,7 @@ namespace Thrones.Scripts
             if (nextState == CurrentState) return;
 
             CurrentState?.Exit();
-            
+
             stateStack?.Push(nextState);
             CurrentState?.Enter();
         }
@@ -92,7 +97,7 @@ namespace Thrones.Scripts
             CurrentState?.Enter();
         }
 
-        public void OnTransition(bool replaceState,  IState state = null)
+        public void OnTransition(bool replaceState, IState state = null)
         {
             var t = new Transition(state, replaceState);
             Transitions.Add(t);
@@ -110,5 +115,4 @@ namespace Thrones.Scripts
             }
         }
     }
-
 }

@@ -1,12 +1,6 @@
-﻿using Godot;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Thrones;
 using Thrones.Scripts;
 using Thrones.Scripts.States;
-using Thrones;
 
 namespace ThronesEra.Scripts.States.ParentStates
 {
@@ -16,42 +10,31 @@ namespace ThronesEra.Scripts.States.ParentStates
 
         /// nodes
 
-        public Node ControlledPC { get; set; }
-        public Camera2D GlobalCamera { get; set; }
-        public override StateManager StateManager { get; set;  }
+        public override StateManager StateManager { get; set; }
         public override GameManager GameManager { get; set; }
 
         /// signals
 
         /// methods
 
-        public ExplorationState(StateManager stateManager, Node controlledPC, Camera2D globalCamera)
+        public ExplorationState(StateManager stateManager, GameManager gameManager)
         {
             StateManager = stateManager;
-            ControlledPC = controlledPC;
-            GlobalCamera = globalCamera;
-            GameManager.ChangeControlledPC += OnChangeControlledCharacter;
-        }
-
-        private void OnChangeControlledCharacter(Node target)
-        {
-            ControlledPC = target;
-            GameManager.EmitSignal(GameManager.SignalName.ChangeControlledPC, ControlledPC);
+            GameManager = gameManager;
         }
 
         public override void Enter()
         {
-            throw new NotImplementedException();
+            Logger.INFO("Transitioned to Exploration State");
+            GameManager.EmitSignal(GameManager.SignalName.ChangeControlledPC, GameManager.ControlledCharacter);
         }
 
         public override void Execute()
         {
-            throw new NotImplementedException();
         }
 
         public override void Exit()
         {
-            throw new NotImplementedException();
         }
     }
 }
