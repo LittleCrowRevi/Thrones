@@ -5,15 +5,15 @@ namespace Thrones.Util
 {
     public partial class SceneLoader : Node
     {
-        // Signals
+        /// Signals
 
         [Signal] public delegate void InitLoadSceneEventHandler(string sceneName, bool unloadScene);
 
-        // Data
+        /// Data
 
         public Node ActiveScene { get; set; }
 
-        // Methods
+        /// Methods
 
         public override void _Ready()
         {
