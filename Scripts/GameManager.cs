@@ -25,8 +25,8 @@ namespace Thrones
 
         /// Player Data
 
-        public Node ControlledCharacter { get; set; }
-        public Node[] Party { get; set; }
+        public Node2D ControlledCharacter { get; set; }
+        public Node2D[] Party { get; set; }
         public NodePath CurrentLocation { get; set; }
 
         /// methods
@@ -38,7 +38,10 @@ namespace Thrones
 
         public override void _Process(double delta)
         {
-            
+            if (ControlledCharacter != null)
+            {
+                Logger.INFO(ControlledCharacter.Position.ToString());
+            }
         }
 
         private async void InitGame()
@@ -58,7 +61,7 @@ namespace Thrones
 
             // Load Player Characters
             var player = await SceneLoader.LoadEntity(Paths.RedPlayer);
-            ControlledCharacter = ((PackedScene)player).Instantiate();
+            ControlledCharacter = (Node2D)((PackedScene)player).Instantiate();
             EmitSignal(SignalName.ChangeControlledPC, ControlledCharacter);
 
             // Load Last Active Scene

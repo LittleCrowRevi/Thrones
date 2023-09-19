@@ -34,16 +34,15 @@ namespace Thrones.Scripts
         // Called every frame. 'delta' is the elapsed time since the previous frame.
         public override void _Process(double delta)
         {
-            
+
         }
 
         public void OnChangeTarget(Node2D newTarget)
         {
             Logger.INFO("Changing Camera Target");
             Target = newTarget;
-            var anchor = (RemoteTransform2D)Target.GetNode("CameraAnchor");
-            // TODO: fix positioning
-            anchor.RemotePath = this.GetPathTo(anchor);
+            
+            Logger.INFO(Target.Position.ToString());
         }
     }
 }
