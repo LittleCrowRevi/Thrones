@@ -1,4 +1,5 @@
 using Godot;
+using System.Threading.Tasks;
 using Thrones.Scripts;
 using Thrones.Scripts.Utility;
 using Thrones.Util;
@@ -31,19 +32,17 @@ namespace Thrones
 
         /// methods
 
-        public override void _Ready()
+        public async override void _Ready()
         {
-            InitGame();
+            await InitGameAsync();
         }
 
         public override void _Process(double delta)
         {
-            if (ControlledCharacter != null)
-            {
-            }
+            
         }
 
-        private async void InitGame()
+        private async Task InitGameAsync()
         {
             Logger.INFO("Initializing Game");
 

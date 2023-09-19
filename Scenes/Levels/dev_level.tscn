@@ -17,9 +17,12 @@ tile_layout = 5
 tile_size = Vector2i(64, 32)
 sources/1 = SubResource("TileSetAtlasSource_mxy8c")
 
-[node name="DevLevel" type="Node"]
+[node name="DevLevel" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
+z_index = -1
+z_as_relative = false
 y_sort_enabled = true
 tile_set = SubResource("TileSet_3r3yk")
 format = 2
