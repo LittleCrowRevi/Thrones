@@ -24,6 +24,9 @@ namespace Thrones.Scripts
         public GlobalCamera()
         {
             Name = "GlobalCamera";
+            PositionSmoothingEnabled = true;
+            RotationSmoothingEnabled = true;
+            ProcessCallback = Camera2DProcessCallback.Physics;
         }
         public override void _Ready()
         {
@@ -32,17 +35,19 @@ namespace Thrones.Scripts
         }
 
         // Called every frame. 'delta' is the elapsed time since the previous frame.
-        public override void _Process(double delta)
+        public override void _PhysicsProcess(double delta)
         {
-
+            if (Target != null)
+            {
+                Position = Target.Position;
+            }
         }
 
         public void OnChangeTarget(Node2D newTarget)
         {
             Logger.INFO("Changing Camera Target");
             Target = newTarget;
-            
-            Logger.INFO(Target.Position.ToString());
+            Position = Target.Position;
         }
     }
 }

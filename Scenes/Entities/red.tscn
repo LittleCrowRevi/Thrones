@@ -5,8 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://035y4d4ww2k2" path="res://Scenes/state_manager.tscn" id="3_ekllq"]
 
 [node name="Red" type="CharacterBody2D"]
+y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 position = Vector2(0, -13)
 scale = Vector2(1.1, 1.1)
 texture = ExtResource("1_5elvs")
