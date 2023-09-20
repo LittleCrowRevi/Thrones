@@ -4,9 +4,9 @@ namespace Thrones.Scripts.Utility
 {
     public static class Paths
     {
-        public static NodePath RedPlayer { get; set; } = new NodePath("res://Scenes/Entities/red.tscn");
-        public static NodePath SceneLoader { get; set; } = new NodePath("res://Scripts/SceneLoader.cs");
-        public static NodePath GlobalCamera { get; set; } = new NodePath("res://Scripts/GlobalCamera.cs");
-        public static NodePath StateManager { get; set; } = new NodePath("res://Scripts/StateManager.cs");
+        public static string RedPlayer { get; set; } = "Scenes/Entities/red.tscn";
+        public static string SceneLoader { get; set; } = "Scripts/SceneLoader.cs";
+        public static string GlobalCamera { get; set; } = "Scripts/GlobalCamera.cs";
+        public static string StateManager { get; set; } = "Scripts/StateManager.cs";
     }
 }

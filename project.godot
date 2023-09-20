@@ -64,6 +64,12 @@ scroll_down={
 ]
 }
 
+[layer_names]
+
+2d_render/layer_4="foundation"
+2d_render/layer_5="floor"
+2d_render/layer_6="player"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

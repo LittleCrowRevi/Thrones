@@ -1,6 +1,5 @@
 using Godot;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
 using Thrones.Scripts.States;
 
 namespace Thrones.Scripts
@@ -59,20 +58,21 @@ namespace Thrones.Scripts
             for (int i = 0; i < transition.Count; i++)
             {
                 var transitionItem = transition[i];
-                if (transitionItem != null)
+                if (transitionItem == null)
                 {
-                    switch (transitionItem.replaceState)
-                    {
-                        case true:
-                            ReplaceState(transitionItem.Next);
-                            Transitions.Remove(transitionItem);
-                            break;
+                    continue;
+                }
+                switch (transitionItem.replaceState)
+                {
+                    case true:
+                        ReplaceState(transitionItem.Next);
+                        Transitions.Remove(transitionItem);
+                        break;
 
-                        case false:
-                            AddState(transitionItem.Next);
-                            Transitions.Remove(transitionItem);
-                            break;
-                    }
+                    case false:
+                        AddState(transitionItem.Next);
+                        Transitions.Remove(transitionItem);
+                        break;
                 }
             }
         }
@@ -97,7 +97,8 @@ namespace Thrones.Scripts
 
         public void RemoveState()
         {
-            if (stateStack == null || stateStack.Count <= 1) return;
+            bool stackEmpty = stateStack == null || stateStack.Count <= 1;
+            if (stackEmpty) return;
 
             CurrentState?.Exit();
             stateStack.Pop();

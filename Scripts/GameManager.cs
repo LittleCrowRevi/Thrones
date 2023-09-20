@@ -4,7 +4,6 @@ using Thrones.Scripts;
 using Thrones.Scripts.Utility;
 using Thrones.Util;
 using ThronesEra;
-using ThronesEra.Scripts.States.ParentStates;
 
 namespace Thrones
 {
@@ -32,14 +31,13 @@ namespace Thrones
 
         /// methods
 
-        public async override void _Ready()
+        public override async void _Ready()
         {
             await InitGameAsync();
         }
 
         public override void _Process(double delta)
         {
-            
         }
 
         private async Task InitGameAsync()
@@ -58,13 +56,14 @@ namespace Thrones
             AddChild(sceneLoader);
 
             PlayerCharacters = new Node2D();
+            PlayerCharacters.Name = "PlayerCharacters";
             AddChild(PlayerCharacters);
 
             // Load Player Characters
             var player = await SceneLoader.LoadEntity(Paths.RedPlayer);
             ControlledCharacter = (Node2D)((PackedScene)player).Instantiate();
             PlayerCharacters.AddChild(ControlledCharacter);
-            
+
             EmitSignal(SignalName.ChangeControlledPC, ControlledCharacter);
 
             // Load Last Active Scene

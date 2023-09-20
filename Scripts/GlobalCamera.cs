@@ -7,12 +7,13 @@ namespace Thrones.Scripts
     {
         /// data
         private Node2D _Target;
+
         private Node2D Target
         {
             get { return _Target; }
             set
             {
-                Logger.INFO("setting target");
+                Logger.INFO("setting target for camera");
                 _Target = value;
             }
         }
@@ -27,11 +28,12 @@ namespace Thrones.Scripts
             PositionSmoothingEnabled = true;
             RotationSmoothingEnabled = true;
             ProcessCallback = Camera2DProcessCallback.Physics;
+            Zoom = new Vector2(2.5f, 2.5f);
         }
+
         public override void _Ready()
         {
             MakeCurrent();
-            
         }
 
         // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -45,7 +47,7 @@ namespace Thrones.Scripts
 
         public void OnChangeTarget(Node2D newTarget)
         {
-            Logger.INFO("Changing Camera Target");
+            Logger.INFO("changing camera target");
             Target = newTarget;
             Position = Target.Position;
         }

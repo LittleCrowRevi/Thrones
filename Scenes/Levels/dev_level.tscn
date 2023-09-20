@@ -21,6 +21,7 @@ sources/1 = SubResource("TileSetAtlasSource_mxy8c")
 y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
+visibility_layer = 8
 z_index = -1
 z_as_relative = false
 y_sort_enabled = true
