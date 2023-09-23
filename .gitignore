@@ -1,4 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
 
+.vs
+.vs/
+.vscode
+.vscode/
+
 .fake
