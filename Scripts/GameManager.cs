@@ -1,5 +1,6 @@
 using Godot;
 using System.Threading.Tasks;
+using System.Web;
 using Thrones.Scripts;
 using Thrones.Scripts.Utility;
 using Thrones.Util;
@@ -13,15 +14,15 @@ namespace Thrones
 
         [Export] public GlobalCamera Camera { get; set; }
         [Export] public Node World { get; set; }
-        [Export] public SceneLoader sceneLoader { get; set; }
+        [Export] public SceneLoader SceneLoader { get; set; }
 
         /// signals
 
-        [Signal] public delegate void ChangeControlledPCEventHandler(Node2D target);
+        [Signal] public delegate void ChangeControlledPcEventHandler(Node2D target);
 
         /// states
 
-        [Export] public StateManager stateManager { get; set; }
+        [Export] public StateManager StateManager { get; set; }
 
         /// Player Data
 
@@ -45,16 +46,19 @@ namespace Thrones
             Logger.INFO("Initializing Game");
 
             // Load Control Nodes
-            stateManager = new StateManager();
-            AddChild(stateManager);
+            StateManager = new StateManager();
+            AddChild(StateManager);
 
+            // Camera
             Camera = new GlobalCamera();
-            ChangeControlledPC += Camera.OnChangeTarget;
+            ChangeControlledPc += Camera.OnChangeTarget;
             AddChild(Camera);
 
-            sceneLoader = new SceneLoader();
-            AddChild(sceneLoader);
+            // SceneLoader
+            SceneLoader = new SceneLoader();
+            AddChild(SceneLoader);
 
+            // PlayerCharacters Array
             PlayerCharacters = new Node2D();
             PlayerCharacters.Name = "PlayerCharacters";
             AddChild(PlayerCharacters);
@@ -64,14 +68,12 @@ namespace Thrones
             ControlledCharacter = (Node2D)((PackedScene)player).Instantiate();
             PlayerCharacters.AddChild(ControlledCharacter);
 
-            EmitSignal(SignalName.ChangeControlledPC, ControlledCharacter);
+            EmitSignal(SignalName.ChangeControlledPc, ControlledCharacter);
 
             // Load Last Active Scene
-            sceneLoader.EmitSignal(SceneLoader.SignalName.InitLoadScene, "res://Scenes/Levels/dev_level.tscn", true);
-
-            // TODO: fix states
-            //ExplorationState exState = new(stateManager, this);
-            //stateManager.InitialState(exState);
+            SceneLoader.EmitSignal(SceneLoader.SignalName.InitLoadScene, Paths.DevLevel, true);
+            
+            
         }
 
         public static GameManager GetGameScript(Node node)

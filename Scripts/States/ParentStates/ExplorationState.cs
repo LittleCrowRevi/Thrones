@@ -10,8 +10,8 @@ namespace ThronesEra.Scripts.States.ParentStates
 
         /// nodes
 
-        public override StateManager StateManager { get; set; }
-        public override GameManager GameManager { get; set; }
+        public sealed override StateManager StateManager { get; set; }
+        public sealed override GameManager GameManager { get; set; }
 
         /// signals
 
@@ -26,7 +26,7 @@ namespace ThronesEra.Scripts.States.ParentStates
         public override void Enter()
         {
             Logger.INFO("Transitioned to Exploration State");
-            GameManager.EmitSignal(GameManager.SignalName.ChangeControlledPC, GameManager.ControlledCharacter);
+            GameManager.EmitSignal(GameManager.SignalName.ChangeControlledPc, GameManager.ControlledCharacter);
         }
 
         public override void Execute()

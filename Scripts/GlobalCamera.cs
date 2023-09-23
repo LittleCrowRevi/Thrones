@@ -18,6 +18,8 @@ namespace Thrones.Scripts
             }
         }
 
+        private Vector2 _zoomLevels = new(2.5f, 2.5f);
+
         /// signals
 
         /// Methods
@@ -28,7 +30,7 @@ namespace Thrones.Scripts
             PositionSmoothingEnabled = true;
             RotationSmoothingEnabled = true;
             ProcessCallback = Camera2DProcessCallback.Physics;
-            Zoom = new Vector2(2.5f, 2.5f);
+            Zoom = _zoomLevels;
         }
 
         public override void _Ready()

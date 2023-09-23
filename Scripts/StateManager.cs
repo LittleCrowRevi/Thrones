@@ -35,7 +35,7 @@ namespace Thrones.Scripts
             Update();
         }
 
-        public void Update()
+        private void Update()
         {
             if (Transitions.Count > 0)
             {
@@ -46,32 +46,24 @@ namespace Thrones.Scripts
 
         private IState PeekState()
         {
-            if (stateStack.Count > 0)
-            {
-                return stateStack.Peek();
-            }
-            return null;
+            return stateStack.Count > 0 ? stateStack.Peek() : null;
         }
 
-        private void ResolveTransitions(List<Transition> transition)
+        private void ResolveTransitions(IReadOnlyList<Transition> transition)
         {
-            for (int i = 0; i < transition.Count; i++)
+            for (var i = 0; i < transition.Count; i++)
             {
-                var transitionItem = transition[i];
-                if (transitionItem == null)
-                {
-                    continue;
-                }
-                switch (transitionItem.replaceState)
+                if (transition[i] == null) continue;
+                switch (transition[i].ReplaceState)
                 {
                     case true:
-                        ReplaceState(transitionItem.Next);
-                        Transitions.Remove(transitionItem);
+                        ReplaceState(transition[i].Next);
+                        Transitions.Remove(transition[i]);
                         break;
 
                     case false:
-                        AddState(transitionItem.Next);
-                        Transitions.Remove(transitionItem);
+                        AddState(transition[i].Next);
+                        Transitions.Remove(transition[i]);
                         break;
                 }
             }
@@ -85,7 +77,7 @@ namespace Thrones.Scripts
             CurrentState?.Enter();
         }
 
-        public void AddState(IState nextState)
+        private void AddState(IState nextState)
         {
             if (nextState == CurrentState) return;
 
@@ -95,16 +87,16 @@ namespace Thrones.Scripts
             CurrentState?.Enter();
         }
 
-        public void RemoveState()
+        private void RemoveState()
         {
-            bool stackEmpty = stateStack == null || stateStack.Count <= 1;
+            bool stackEmpty = stateStack is not { Count: > 1 };
             if (stackEmpty) return;
 
             CurrentState?.Exit();
             stateStack.Pop();
         }
 
-        public void ReplaceState(IState nextState)
+        private void ReplaceState(IState nextState)
         {
             if (nextState == CurrentState) return;
 
@@ -115,7 +107,7 @@ namespace Thrones.Scripts
             CurrentState?.Enter();
         }
 
-        public void OnTransition(bool replaceState, IState state = null)
+        private void OnTransition(bool replaceState, IState state = null)
         {
             var t = new Transition(state, replaceState);
             Transitions.Add(t);
@@ -123,13 +115,13 @@ namespace Thrones.Scripts
 
         private sealed class Transition
         {
-            public IState Next;
-            public bool replaceState;
+            public readonly IState Next;
+            public readonly bool ReplaceState;
 
             public Transition(IState next, bool replaceState)
             {
                 Next = next;
-                this.replaceState = replaceState;
+                ReplaceState = replaceState;
             }
         }
     }

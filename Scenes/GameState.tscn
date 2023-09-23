@@ -2,10 +2,9 @@
 
 [ext_resource type="Script" path="res://Scripts/GameManager.cs" id="1_xel21"]
 
-[node name="GameManager" type="Node2D" node_paths=PackedStringArray("World")]
+[node name="GameManager" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_xel21")
-World = NodePath("")
 
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true

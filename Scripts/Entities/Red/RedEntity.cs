@@ -1,13 +1,27 @@
-﻿using Godot;
+﻿using System.Collections.Generic;
+using Godot;
+using ThronesEra.Scripts.Entities.Components;
 
-namespace ThronesEra.Scripts.Entities.Player
+namespace ThronesEra.Scripts.Entities;
+
+public partial class RedEntity : CharacterBody2D, IEntity
 {
-    public partial class RedEntity : CharacterBody2D
+    public CoreStatsComponent CoreStats { get; set; }
+    public VitalStatsComponent Vitals { get; set; }
+
+    public override void _Ready()
     {
-        public override void _Ready()
+        Name = "Red";
+        Position = new Vector2(40f, 50f);
+    }
+
+    public IEnumerable<Component> QueryComponents()
+    {
+        List < Component > components = new()
         {
-            Name = "Red";
-            Position = new Vector2(40f, 50f);
-        }
+            Vitals,
+            CoreStats
+        };
+        return components;
     }
 }

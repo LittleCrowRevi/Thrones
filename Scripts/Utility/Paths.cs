@@ -8,5 +8,7 @@ namespace Thrones.Scripts.Utility
         public static string SceneLoader { get; set; } = "Scripts/SceneLoader.cs";
         public static string GlobalCamera { get; set; } = "Scripts/GlobalCamera.cs";
         public static string StateManager { get; set; } = "Scripts/StateManager.cs";
+
+        public static string DevLevel { get; set; } = "res://Scenes/Levels/dev_level.tscn";
     }
 }
