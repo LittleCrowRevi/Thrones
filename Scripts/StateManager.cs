@@ -2,127 +2,126 @@ using Godot;
 using System.Collections.Generic;
 using Thrones.Scripts.States;
 
-namespace Thrones.Scripts
+namespace Thrones.Scripts;
+
+// implement transition methods? from to?
+public partial class StateManager : Node
 {
-    // implement transition methods? from to?
-    public partial class StateManager : Node
+    /// Data Fields
+    private Stack<IState> _stateStack;
+
+    public IState CurrentState => PeekState();
+    private List<Transition> _transitions;
+
+    /// Events
+    [Signal] public delegate void StateChangeEventHandler(bool replaceState, IState nextState);
+
+    /// methods
+
+    public StateManager()
     {
-        /// Data Fields
-        private Stack<IState> stateStack;
+        this.Name = "StateManager";
+    }
 
-        public IState CurrentState => PeekState();
-        private List<Transition> Transitions;
+    public override void _Ready()
+    {
+        _stateStack = new Stack<IState>();
+        _transitions = new List<Transition>();
+        StateChange += OnTransition;
+    }
 
-        /// Events
-        [Signal] public delegate void StateChangeEventHandler(bool replaceState, IState nextState);
+    public override void _Process(double delta)
+    {
+        Update();
+    }
 
-        /// methods
-
-        public StateManager()
+    private void Update()
+    {
+        if (_transitions.Count > 0)
         {
-            this.Name = "StateManager";
+            ResolveTransitions(_transitions);
         }
+        CurrentState?.Execute();
+    }
 
-        public override void _Ready()
-        {
-            stateStack = new Stack<IState>();
-            Transitions = new List<Transition>();
-            StateChange += OnTransition;
-        }
+    private IState PeekState()
+    {
+        return _stateStack.Count > 0 ? _stateStack.Peek() : null;
+    }
 
-        public override void _Process(double delta)
+    private void ResolveTransitions(IReadOnlyList<Transition> transition)
+    {
+        for (var i = 0; i < transition.Count; i++)
         {
-            Update();
-        }
-
-        private void Update()
-        {
-            if (Transitions.Count > 0)
+            if (transition[i] == null) continue;
+            switch (transition[i].ReplaceState)
             {
-                ResolveTransitions(Transitions);
-            }
-            CurrentState?.Execute();
-        }
+                case true:
+                    ReplaceState(transition[i].Next);
+                    _transitions.Remove(transition[i]);
+                    break;
 
-        private IState PeekState()
-        {
-            return stateStack.Count > 0 ? stateStack.Peek() : null;
-        }
-
-        private void ResolveTransitions(IReadOnlyList<Transition> transition)
-        {
-            for (var i = 0; i < transition.Count; i++)
-            {
-                if (transition[i] == null) continue;
-                switch (transition[i].ReplaceState)
-                {
-                    case true:
-                        ReplaceState(transition[i].Next);
-                        Transitions.Remove(transition[i]);
-                        break;
-
-                    case false:
-                        AddState(transition[i].Next);
-                        Transitions.Remove(transition[i]);
-                        break;
-                }
+                case false:
+                    AddState(transition[i].Next);
+                    _transitions.Remove(transition[i]);
+                    break;
             }
         }
+    }
 
-        public void InitialState(IState state)
+    public void InitialState(IState state)
+    {
+        _stateStack.Clear();
+        _stateStack.Push(state);
+
+        CurrentState?.Enter();
+    }
+
+    private void AddState(IState nextState)
+    {
+        if (nextState == CurrentState) return;
+
+        CurrentState?.Exit();
+
+        _stateStack?.Push(nextState);
+        CurrentState?.Enter();
+    }
+
+    private void RemoveState()
+    {
+        bool stackEmpty = _stateStack is not { Count: > 1 };
+        if (stackEmpty) return;
+
+        CurrentState?.Exit();
+        _stateStack.Pop();
+    }
+
+    private void ReplaceState(IState nextState)
+    {
+        if (nextState == CurrentState) return;
+
+        CurrentState?.Exit();
+        _stateStack?.Pop();
+
+        _stateStack?.Push(nextState);
+        CurrentState?.Enter();
+    }
+
+    private void OnTransition(bool replaceState, IState state = null)
+    {
+        var t = new Transition(state, replaceState);
+        _transitions.Add(t);
+    }
+
+    private sealed class Transition
+    {
+        public readonly IState Next;
+        public readonly bool ReplaceState;
+
+        public Transition(IState next, bool replaceState)
         {
-            stateStack.Clear();
-            stateStack.Push(state);
-
-            CurrentState?.Enter();
-        }
-
-        private void AddState(IState nextState)
-        {
-            if (nextState == CurrentState) return;
-
-            CurrentState?.Exit();
-
-            stateStack?.Push(nextState);
-            CurrentState?.Enter();
-        }
-
-        private void RemoveState()
-        {
-            bool stackEmpty = stateStack is not { Count: > 1 };
-            if (stackEmpty) return;
-
-            CurrentState?.Exit();
-            stateStack.Pop();
-        }
-
-        private void ReplaceState(IState nextState)
-        {
-            if (nextState == CurrentState) return;
-
-            CurrentState?.Exit();
-            stateStack?.Pop();
-
-            stateStack?.Push(nextState);
-            CurrentState?.Enter();
-        }
-
-        private void OnTransition(bool replaceState, IState state = null)
-        {
-            var t = new Transition(state, replaceState);
-            Transitions.Add(t);
-        }
-
-        private sealed class Transition
-        {
-            public readonly IState Next;
-            public readonly bool ReplaceState;
-
-            public Transition(IState next, bool replaceState)
-            {
-                Next = next;
-                ReplaceState = replaceState;
-            }
+            Next = next;
+            ReplaceState = replaceState;
         }
     }
 }

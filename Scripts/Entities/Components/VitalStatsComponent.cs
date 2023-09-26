@@ -2,6 +2,8 @@
 
 public class VitalStatsComponent : Component
 {
+    #region Data Fields
+    
     public int TotalHp { get; set; }
     public int CurrentHp { get; set; }
 
@@ -11,6 +13,7 @@ public class VitalStatsComponent : Component
     public int TotalEp { get; set; }
     public int CurrentEp { get; set; }
     
+    #endregion
 
     public VitalStatsComponent(int currentHp, int currentMp, int currentEp)
     {
