@@ -6,24 +6,12 @@ namespace Thrones.Scripts;
 public partial class GlobalCamera : Camera2D
 {
     /// data
-    private Node2D _Target;
-
-    private Node2D Target
-    {
-        get { return _Target; }
-        set
-        {
-            Logger.INFO("setting target for camera");
-            _Target = value;
-        }
-    }
+    private Node2D _target;
 
     private Vector2 _zoomLevels = new(2.5f, 2.5f);
 
     /// signals
-
     /// Methods
-
     public GlobalCamera()
     {
         Name = "GlobalCamera";
@@ -31,6 +19,16 @@ public partial class GlobalCamera : Camera2D
         RotationSmoothingEnabled = true;
         ProcessCallback = Camera2DProcessCallback.Physics;
         Zoom = _zoomLevels;
+    }
+
+    private Node2D Target
+    {
+        get => _target;
+        set
+        {
+            Logger.INFO("setting target for camera");
+            _target = value;
+        }
     }
 
     public override void _Ready()
@@ -41,10 +39,7 @@ public partial class GlobalCamera : Camera2D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
     {
-        if (Target != null)
-        {
-            Position = Target.Position;
-        }
+        if (Target != null) Position = Target.Position;
     }
 
     public void OnChangeTarget(Node2D newTarget)

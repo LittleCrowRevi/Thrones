@@ -3,8 +3,6 @@
 public class ConditionsComponent : Component
 {
     #region Data Fields
-    
-    
-    
+
     #endregion
 }

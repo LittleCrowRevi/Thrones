@@ -1,6 +1,5 @@
-using Godot;
 using System.Threading.Tasks;
-using System.Web;
+using Godot;
 using Thrones.Scripts;
 using Thrones.Scripts.Utility;
 using Thrones.Util;
@@ -10,19 +9,22 @@ namespace Thrones;
 
 public partial class GameManager : Node2D
 {
+    /// signals
+    [Signal]
+    public delegate void ChangeControlledPcEventHandler(Node2D target);
+
     /// nodes
 
-    [Export] public GlobalCamera Camera { get; set; }
+    [Export]
+    public GlobalCamera Camera { get; set; }
+
     [Export] public Node World { get; set; }
     [Export] public SceneLoader SceneLoader { get; set; }
 
-    /// signals
-
-    [Signal] public delegate void ChangeControlledPcEventHandler(Node2D target);
-
     /// states
 
-    [Export] public StateManager StateManager { get; set; }
+    [Export]
+    public StateManager StateManager { get; set; }
 
     /// Player Data
 
@@ -31,7 +33,6 @@ public partial class GameManager : Node2D
     public NodePath CurrentLocation { get; set; }
 
     /// methods
-
     public override async void _Ready()
     {
         await InitGameAsync();
@@ -72,8 +73,6 @@ public partial class GameManager : Node2D
 
         // Load Last Active Scene
         SceneLoader.EmitSignal(SceneLoader.SignalName.InitLoadScene, Paths.DevLevel, true);
-            
-            
     }
 
     public static GameManager GetGameScript(Node node)

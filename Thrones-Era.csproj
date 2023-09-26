@@ -1,11 +1,11 @@
 <Project Sdk="Godot.NET.Sdk/4.1.1">
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <EnableDynamicLoading>true</EnableDynamicLoading>
-    <RootNamespace>ThronesEra</RootNamespace>
-  </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Scripts\Components\" />
-    <Folder Include="Scripts\States\SubStates\" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+        <RootNamespace>ThronesEra</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+        <Folder Include="Scripts\Components\"/>
+        <Folder Include="Scripts\States\SubStates\"/>
+    </ItemGroup>
 </Project>

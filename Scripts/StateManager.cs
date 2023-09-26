@@ -1,5 +1,5 @@
-using Godot;
 using System.Collections.Generic;
+using Godot;
 using Thrones.Scripts.States;
 
 namespace Thrones.Scripts;
@@ -7,21 +7,22 @@ namespace Thrones.Scripts;
 // implement transition methods? from to?
 public partial class StateManager : Node
 {
+    /// Events
+    [Signal]
+    public delegate void StateChangeEventHandler(bool replaceState, IState nextState);
+
     /// Data Fields
     private Stack<IState> _stateStack;
 
-    public IState CurrentState => PeekState();
     private List<Transition> _transitions;
 
-    /// Events
-    [Signal] public delegate void StateChangeEventHandler(bool replaceState, IState nextState);
-
     /// methods
-
     public StateManager()
     {
-        this.Name = "StateManager";
+        Name = "StateManager";
     }
+
+    public IState CurrentState => PeekState();
 
     public override void _Ready()
     {
@@ -37,10 +38,7 @@ public partial class StateManager : Node
 
     private void Update()
     {
-        if (_transitions.Count > 0)
-        {
-            ResolveTransitions(_transitions);
-        }
+        if (_transitions.Count > 0) ResolveTransitions(_transitions);
         CurrentState?.Execute();
     }
 
@@ -89,7 +87,7 @@ public partial class StateManager : Node
 
     private void RemoveState()
     {
-        bool stackEmpty = _stateStack is not { Count: > 1 };
+        var stackEmpty = _stateStack is not { Count: > 1 };
         if (stackEmpty) return;
 
         CurrentState?.Exit();

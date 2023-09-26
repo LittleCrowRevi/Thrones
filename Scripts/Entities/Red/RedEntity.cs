@@ -9,19 +9,19 @@ public partial class RedEntity : CharacterBody2D, IEntity
     public CoreStatsComponent CoreStats { get; set; }
     public VitalStatsComponent Vitals { get; set; }
 
-    public override void _Ready()
-    {
-        Name = "Red";
-        Position = new Vector2(40f, 50f);
-    }
-
     public IEnumerable<Component> QueryComponents()
     {
-        List < Component > components = new()
+        List<Component> components = new()
         {
             Vitals,
             CoreStats
         };
         return components;
+    }
+
+    public override void _Ready()
+    {
+        Name = "Red";
+        Position = new Vector2(40f, 50f);
     }
 }

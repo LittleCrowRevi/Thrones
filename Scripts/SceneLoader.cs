@@ -1,5 +1,5 @@
-﻿using Godot;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Godot;
 using ThronesEra;
 
 namespace Thrones.Util;
@@ -7,19 +7,18 @@ namespace Thrones.Util;
 public partial class SceneLoader : Node
 {
     /// Signals
+    [Signal]
+    public delegate void InitLoadSceneEventHandler(string sceneName, bool unloadScene);
 
-    [Signal] public delegate void InitLoadSceneEventHandler(string sceneName, bool unloadScene);
+    /// Methods
+    public SceneLoader()
+    {
+        Name = "SceneLoader";
+    }
 
     /// Data
 
     public Node ActiveScene { get; set; }
-
-    /// Methods
-
-    public SceneLoader()
-    {
-        this.Name = "SceneLoader";
-    }
 
     public override void _Ready()
     {
@@ -34,9 +33,7 @@ public partial class SceneLoader : Node
         ResourceLoader.LoadThreadedRequest(entityPath);
 
         while (ResourceLoader.LoadThreadedGetStatus(entityPath) != ResourceLoader.ThreadLoadStatus.Loaded)
-        {
             await Task.Delay(500);
-        }
 
         return ResourceLoader.LoadThreadedGet(entityPath);
     }
