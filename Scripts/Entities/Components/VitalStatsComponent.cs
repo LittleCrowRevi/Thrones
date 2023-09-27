@@ -1,6 +1,6 @@
 ﻿namespace ThronesEra.Scripts.Entities.Components;
 
-public class VitalStatsComponent : Component
+public partial class VitalStatsComponent : Component
 {
     public VitalStatsComponent(int currentHp, int currentMp, int currentEp)
     {

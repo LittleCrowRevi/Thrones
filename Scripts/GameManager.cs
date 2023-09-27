@@ -1,9 +1,12 @@
 using System.Threading.Tasks;
 using Godot;
+using Thrones.Components;
 using Thrones.Scripts;
 using Thrones.Scripts.Utility;
 using Thrones.Util;
 using ThronesEra;
+using ThronesEra.Scripts.Entities;
+using ThronesEra.Scripts.Entities.Components;
 
 namespace Thrones;
 
@@ -15,16 +18,14 @@ public partial class GameManager : Node2D
 
     /// nodes
 
-    [Export]
-    public GlobalCamera Camera { get; set; }
+    [Export] public GlobalCamera Camera { get; set; }
 
     [Export] public Node World { get; set; }
     [Export] public SceneLoader SceneLoader { get; set; }
 
     /// states
 
-    [Export]
-    public StateManager StateManager { get; set; }
+    [Export] public StateManager StateManager { get; set; }
 
     /// Player Data
 
@@ -33,16 +34,16 @@ public partial class GameManager : Node2D
     public NodePath CurrentLocation { get; set; }
 
     /// methods
-    public override async void _Ready()
+    public override void _Ready()
     {
-        await InitGameAsync();
+        InitGameAsync();
     }
 
     public override void _Process(double delta)
     {
     }
 
-    private async Task InitGameAsync()
+    private void InitGameAsync()
     {
         Logger.INFO("Initializing Game");
 
@@ -61,12 +62,17 @@ public partial class GameManager : Node2D
 
         // PlayerCharacters Array
         PlayerCharacters = new Node2D();
+        PlayerCharacters.YSortEnabled = true;
         PlayerCharacters.Name = "PlayerCharacters";
         AddChild(PlayerCharacters);
 
         // Load Player Characters
-        var player = await SceneLoader.LoadEntity(Paths.RedPlayer);
-        ControlledCharacter = (Node2D)((PackedScene)player).Instantiate();
+        ControlledCharacter = new RedEntity(
+            new CoreStatsComponent(1, 1, 1, 1),
+            new VitalStatsComponent(1, 1, 1),
+            new EntityControlComponent()
+            );
+        ControlledCharacter.Visible = true;
         PlayerCharacters.AddChild(ControlledCharacter);
 
         EmitSignal(SignalName.ChangeControlledPc, ControlledCharacter);

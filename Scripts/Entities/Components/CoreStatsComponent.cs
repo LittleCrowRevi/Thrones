@@ -1,6 +1,6 @@
 ﻿namespace ThronesEra.Scripts.Entities.Components;
 
-public class CoreStatsComponent : Component
+public partial class CoreStatsComponent : Component
 {
     #region Constructor
 

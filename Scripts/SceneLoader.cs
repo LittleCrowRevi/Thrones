@@ -7,8 +7,7 @@ namespace Thrones.Util;
 public partial class SceneLoader : Node
 {
     /// Signals
-    [Signal]
-    public delegate void InitLoadSceneEventHandler(string sceneName, bool unloadScene);
+    [Signal] public delegate void InitLoadSceneEventHandler(string sceneName, bool unloadScene);
 
     /// Methods
     public SceneLoader()

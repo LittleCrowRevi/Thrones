@@ -1,6 +1,6 @@
 ﻿namespace ThronesEra.Scripts.Entities.Components;
 
-public class ConditionsComponent : Component
+public partial class ConditionsComponent : Component
 {
     #region Data Fields
 

@@ -1,6 +1,8 @@
-﻿namespace ThronesEra.Scripts.Entities.Components;
+﻿using Godot;
 
-public abstract class Component
+namespace ThronesEra.Scripts.Entities.Components;
+
+public abstract partial class Component : Node
 {
     public void Update()
     {

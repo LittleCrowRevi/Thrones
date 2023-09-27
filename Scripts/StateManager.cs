@@ -8,8 +8,7 @@ namespace Thrones.Scripts;
 public partial class StateManager : Node
 {
     /// Events
-    [Signal]
-    public delegate void StateChangeEventHandler(bool replaceState, IState nextState);
+    [Signal] public delegate void StateChangeEventHandler(bool replaceState, IState nextState);
 
     /// Data Fields
     private Stack<IState> _stateStack;
