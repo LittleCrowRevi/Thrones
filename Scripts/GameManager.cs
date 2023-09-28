@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using Godot;
-using Thrones.Components;
 using Thrones.Scripts;
 using Thrones.Scripts.Utility;
 using Thrones.Util;
 using ThronesEra;
+using ThronesEra.Scripts.Components;
 using ThronesEra.Scripts.Entities;
 using ThronesEra.Scripts.Entities.Components;
 
@@ -19,9 +19,8 @@ public partial class GameManager : Node2D
     /// nodes
 
     [Export] public GlobalCamera Camera { get; set; }
-
     [Export] public Node World { get; set; }
-    [Export] public SceneLoader SceneLoader { get; set; }
+    [Export] public GlobalLoader GlobalLoader { get; set; }
 
     /// states
 
@@ -57,8 +56,8 @@ public partial class GameManager : Node2D
         AddChild(Camera);
 
         // SceneLoader
-        SceneLoader = new SceneLoader();
-        AddChild(SceneLoader);
+        GlobalLoader = new GlobalLoader();
+        AddChild(GlobalLoader);
 
         // PlayerCharacters Array
         PlayerCharacters = new Node2D();
@@ -78,7 +77,7 @@ public partial class GameManager : Node2D
         EmitSignal(SignalName.ChangeControlledPc, ControlledCharacter);
 
         // Load Last Active Scene
-        SceneLoader.EmitSignal(SceneLoader.SignalName.InitLoadScene, Paths.DevLevel, true);
+        GlobalLoader.EmitSignal(GlobalLoader.SignalName.InitLoadScene, Paths.DEVLEVEL, true);
     }
 
     public static GameManager GetGameScript(Node node)

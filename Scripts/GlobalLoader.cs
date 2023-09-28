@@ -4,20 +4,19 @@ using ThronesEra;
 
 namespace Thrones.Util;
 
-public partial class SceneLoader : Node
+public partial class GlobalLoader : Node
 {
     /// Signals
     [Signal] public delegate void InitLoadSceneEventHandler(string sceneName, bool unloadScene);
 
-    /// Methods
-    public SceneLoader()
-    {
-        Name = "SceneLoader";
-    }
-
     /// Data
-
     public Node ActiveScene { get; set; }
+
+    /// Methods
+    public GlobalLoader()
+    {
+        Name = "GlobalLoader";
+    }
 
     public override void _Ready()
     {
@@ -27,6 +26,17 @@ public partial class SceneLoader : Node
         InitLoadScene += GotoScene;
     }
 
+    public static Texture2D LoadTexture(string path)
+    {
+        var resource = GD.Load(path);
+        return (Texture2D)resource;
+    }
+
+    /// <summary>
+    /// Async loads a packed scene entity
+    /// </summary>
+    /// <param name="entityPath"></param>
+    /// <returns></returns>
     public static async Task<Resource> LoadEntity(string entityPath)
     {
         ResourceLoader.LoadThreadedRequest(entityPath);
