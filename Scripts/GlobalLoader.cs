@@ -18,13 +18,11 @@ public partial class GlobalLoader : Node
 
     /// Data
     public Node ActiveScene { get; set; }
-    public ProgressBar loadingBar { get; set; }
+    public ProgressBar LoadingBar { get; set; }
 
     /// Methods
     public override void _Ready()
     {
-        Viewport root = GetTree().Root;
-        ActiveScene = root.GetNode<Node>("GameManager").GetNode("World").GetChildOrNull<Node>(0);
     }
 
     public static Texture2D LoadTexture(string path)
@@ -51,12 +49,13 @@ public partial class GlobalLoader : Node
     private void LoadScene(string path, bool unloadPrevious)
     {
         ResourceLoader.LoadThreadedRequest(path, cacheMode: ResourceLoader.CacheMode.Ignore);
-        loadingBar.Visible = true;
+        
+        LoadingBar.Visible = true;
         var progress = new Array();
         while (ResourceLoader.LoadThreadedGetStatus(path, progress) != ResourceLoader.ThreadLoadStatus.Loaded)
         {
             Logger.INFO(progress);
-            loadingBar.Value = (double)progress[0] * 100;
+            LoadingBar.Value = (double)progress[0] * 100;
         }
 
         var nextScene = (PackedScene)ResourceLoader.LoadThreadedGet(path);
@@ -67,8 +66,8 @@ public partial class GlobalLoader : Node
         GetTree().Root.GetNode("GameManager/World").AddChild(ActiveScene);
 
         Logger.INFO($"Loaded new scene: {ActiveScene.Name}");
-        loadingBar.Value = 0;
-        loadingBar.Visible = false;
+        LoadingBar.Value = 0;
+        LoadingBar.Visible = false;
     }
 
     public void GotoScene(string path, bool unloadPrevious)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cgk2nqhibk5g6"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.cs" id="1_xel21"]
-[ext_resource type="PackedScene" uid="uid://chkk5uawx77xm" path="res://Scenes/HUD/loading_screen.tscn" id="2_728e0"]
+[ext_resource type="PackedScene" uid="uid://chkk5uawx77xm" path="res://Scenes/HUD/HUD.tscn" id="2_728e0"]
 
 [node name="GameManager" type="Node2D"]
 y_sort_enabled = true
@@ -12,4 +12,4 @@ script = ExtResource("1_xel21")
 y_sort_enabled = true
 position = Vector2(-394, -507)
 
-[node name="CanvasLayer" parent="." instance=ExtResource("2_728e0")]
+[node name="HUD" parent="." instance=ExtResource("2_728e0")]

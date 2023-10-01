@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dxqqrkxgpygx5" path="res://Resources/Fonts/fredeka.tres" id="1_hc46c"]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="HUD" type="CanvasLayer"]
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3

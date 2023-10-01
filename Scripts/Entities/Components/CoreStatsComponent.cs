@@ -6,6 +6,7 @@ public partial class CoreStatsComponent : Component
 
     public CoreStatsComponent(int intelligence, int strength, int constitution, int agility)
     {
+        Name = "CoreStats";
         Intelligence = intelligence;
         Strength = strength;
         Constitution = constitution;

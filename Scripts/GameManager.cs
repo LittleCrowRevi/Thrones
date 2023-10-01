@@ -16,9 +16,10 @@ public partial class GameManager : Node2D
 
     /// nodes
 
-    [Export] public GlobalCamera Camera { get; set; }
-    [Export] public Node World { get; set; }
-    [Export] public GlobalLoader GlobalLoader { get; set; }
+    private GlobalCamera Camera { get; set; }
+    private Node World { get; set; }
+    private GlobalLoader GlobalLoader { get; set; }
+    private HPBar HpBar { get; set; }
 
     /// states
     [Export] public StateManager StateManager { get; set; }
@@ -26,8 +27,8 @@ public partial class GameManager : Node2D
     /// Player Data
 
     public Node2D PlayerCharacters { get; set; }
-    public Node2D ControlledCharacter { get; set; }
-    public NodePath CurrentLocation { get; set; }
+    public IEntity ControlledCharacter { get; set; }
+    private NodePath CurrentLocation { get; set; }
 
     /// methods
     public override void _Ready()
@@ -48,6 +49,9 @@ public partial class GameManager : Node2D
         // Load Control Nodes
         StateManager = new StateManager();
         AddChild(StateManager);
+        
+        // HUD
+        LoadHUD();
 
         // Camera
         Camera = new GlobalCamera();
@@ -56,7 +60,7 @@ public partial class GameManager : Node2D
 
         // SceneLoader
         GlobalLoader = new GlobalLoader();
-        GlobalLoader.loadingBar = (ProgressBar)GetNode("CanvasLayer/Control/ProgressBar");
+        GlobalLoader.LoadingBar = (ProgressBar)GetNode("HUD/Control/ProgressBar");
         AddChild(GlobalLoader);
 
         // PlayerCharacters Array
@@ -66,18 +70,37 @@ public partial class GameManager : Node2D
         AddChild(PlayerCharacters);
 
         // Load Player Characters
-        ControlledCharacter = new RedEntity(
+        var redEntity = new RedEntity(
             new CoreStatsComponent(1, 1, 1, 1),
-            new VitalStatsComponent(1, 1, 1),
+            new VitalStatsComponent(100, 100, 100),
             new EntityControlComponent()
         );
+        
+        ControlledCharacter = redEntity;
         ControlledCharacter.Visible = true;
+        ControlledCharacter.Vitals.HpChange += HpBar.UpdateHpInfo;
         PlayerCharacters.AddChild(ControlledCharacter);
 
         EmitSignal(SignalName.ChangeControlledPc, ControlledCharacter);
 
         // Load Last Active Scene
         GlobalLoader.EmitSignal(GlobalLoader.SignalName.InitLoadScene, Paths.DEVLEVEL, true);
+
+        HpBar.Visible = true;
+    }
+
+    private void LoadHUD()
+    {
+        HpBar = new HPBar();
+        HpBar.Visible = false;
+        HpBar.TextureUnder = GlobalLoader.LoadTexture(Paths.HPBARUNDER);
+        HpBar.TextureProgress = GlobalLoader.LoadTexture(Paths.HPBARFILL);
+        HpBar.TextureProgressOffset = new Vector2(12F, 1F);
+        HpBar.Position = new Vector2(-350F, -460F);
+        HpBar.Scale = new Vector2(5F, 5F);
+        HpBar.Value = 100;
+        
+        GetNode("HUD/Control").AddChild(HpBar);
     }
 
     public static GameManager GetGameScript(Node node)

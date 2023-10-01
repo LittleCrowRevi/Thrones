@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://xwusdgitjoyr"]
+
+[ext_resource type="Texture2D" uid="uid://dpx2on4o41a35" path="res://Resources/HUD Textures/hp-barframe.png" id="1_wffli"]
+[ext_resource type="Texture2D" uid="uid://brl2sape6c4fs" path="res://Resources/HUD Textures/hp-barfill.png" id="2_gw71o"]
+[ext_resource type="Script" path="res://Scenes/HUD/HPBar.cs" id="3_oa437"]
+
+[node name="TextureProgressBar" type="TextureProgressBar"]
+visible = false
+offset_left = -350.0
+offset_top = -460.0
+offset_right = -299.0
+offset_bottom = -454.0
+scale = Vector2(5, 5)
+texture_under = ExtResource("1_wffli")
+texture_progress = ExtResource("2_gw71o")
+texture_progress_offset = Vector2(12, 1)
+script = ExtResource("3_oa437")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 22.0
+offset_top = -0.200001
+offset_right = 134.0
+offset_bottom = 40.8
+scale = Vector2(0.165, 0.165)
+text = "100/100"

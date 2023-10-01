@@ -7,7 +7,7 @@ using ThronesEra.Scripts.Entities.Components;
 
 namespace ThronesEra.Scripts.Entities;
 
-public partial class RedEntity : CharacterBody2D, IEntity
+public partial class RedEntity : IEntity
 {
     public RedEntity(CoreStatsComponent coreStats, VitalStatsComponent vitals,
         EntityControlComponent entityControlComponent)
@@ -18,6 +18,7 @@ public partial class RedEntity : CharacterBody2D, IEntity
         AddChild(Vitals);
         EntityControlComponent = entityControlComponent;
         AddChild(EntityControlComponent);
+        
         _sprite2D = CreateSprite(Paths.REDSPRITE);
         AddChild(_sprite2D);
 
@@ -25,13 +26,12 @@ public partial class RedEntity : CharacterBody2D, IEntity
         YSortEnabled = true;
     }
 
-    private Sprite2D _sprite2D;
-    
-    public CoreStatsComponent CoreStats { get; set; }
-    public VitalStatsComponent Vitals { get; set; }
+    private readonly Sprite2D _sprite2D;
+    public sealed override CoreStatsComponent CoreStats { get; set; }
+    public sealed override VitalStatsComponent Vitals { get; set; }
     public EntityControlComponent EntityControlComponent { get; set; }
 
-    public IEnumerable<Component> QueryComponents()
+    public override IEnumerable<Component> QueryComponents()
     {
         List<Component> components = new()
         {
@@ -51,5 +51,17 @@ public partial class RedEntity : CharacterBody2D, IEntity
         sprite2D.Frame = 4;
         sprite2D.Scale = new Vector2(1.1F, 1.1F);
         return sprite2D;
+    }
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("dev_heal"))
+        {
+            Vitals.OnHeal(10);
+        }
+        if (Input.IsActionJustPressed("dev_damage"))
+        {
+            Vitals.OnDamage(10);
+        }
     }
 }
