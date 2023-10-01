@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Godot;
 using Thrones.Scripts;
 using Thrones.Scripts.Utility;
@@ -13,8 +12,7 @@ namespace Thrones;
 public partial class GameManager : Node2D
 {
     /// signals
-    [Signal]
-    public delegate void ChangeControlledPcEventHandler(Node2D target);
+    [Signal] public delegate void ChangeControlledPcEventHandler(Node2D target);
 
     /// nodes
 
@@ -23,13 +21,12 @@ public partial class GameManager : Node2D
     [Export] public GlobalLoader GlobalLoader { get; set; }
 
     /// states
-
     [Export] public StateManager StateManager { get; set; }
 
     /// Player Data
 
-    public Node2D ControlledCharacter { get; set; }
     public Node2D PlayerCharacters { get; set; }
+    public Node2D ControlledCharacter { get; set; }
     public NodePath CurrentLocation { get; set; }
 
     /// methods
@@ -41,9 +38,7 @@ public partial class GameManager : Node2D
     public override void _Process(double delta)
     {
         if (Input.IsActionJustReleased("loadDev"))
-        {
             GlobalLoader.EmitSignal(GlobalLoader.SignalName.InitLoadScene, Paths.DEVLEVEL, true);
-        }
     }
 
     private void InitGameAsync()
@@ -75,7 +70,7 @@ public partial class GameManager : Node2D
             new CoreStatsComponent(1, 1, 1, 1),
             new VitalStatsComponent(1, 1, 1),
             new EntityControlComponent()
-            );
+        );
         ControlledCharacter.Visible = true;
         PlayerCharacters.AddChild(ControlledCharacter);
 

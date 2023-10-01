@@ -7,27 +7,24 @@ namespace Thrones.Util;
 
 public partial class GlobalLoader : Node
 {
-    /// Signals
-    [Signal] public delegate void InitLoadSceneEventHandler(string sceneName, bool unloadScene);
-
-    /// Data
-    public Node ActiveScene { get; set; }
-
-    /// Methods
     public GlobalLoader()
     {
         Name = "GlobalLoader";
         InitLoadScene += LoadScene;
     }
-
-    /// Nodes 
-    public ProgressBar loadingBar { get; set; }
     
+    /// Signals
+    [Signal] public delegate void InitLoadSceneEventHandler(string sceneName, bool unloadScene);
+
+    /// Data
+    public Node ActiveScene { get; set; }
+    public ProgressBar loadingBar { get; set; }
+
+    /// Methods
     public override void _Ready()
     {
         Viewport root = GetTree().Root;
         ActiveScene = root.GetNode<Node>("GameManager").GetNode("World").GetChildOrNull<Node>(0);
-
     }
 
     public static Texture2D LoadTexture(string path)
@@ -37,7 +34,7 @@ public partial class GlobalLoader : Node
     }
 
     /// <summary>
-    /// Async loads a packed scene entity
+    ///     Async loads a packed scene entity
     /// </summary>
     /// <param name="entityPath"></param>
     /// <returns></returns>
@@ -63,7 +60,7 @@ public partial class GlobalLoader : Node
         }
 
         var nextScene = (PackedScene)ResourceLoader.LoadThreadedGet(path);
-        
+
         if (unloadPrevious) ActiveScene?.Free();
         ActiveScene = nextScene.Instantiate();
 

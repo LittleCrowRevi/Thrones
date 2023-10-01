@@ -12,17 +12,15 @@ public partial class StateManager : Node
 
     /// Data Fields
     private Stack<IState> _stateStack;
-
+    public IState CurrentState => PeekState();
     private List<Transition> _transitions;
 
-    /// methods
     public StateManager()
     {
         Name = "StateManager";
     }
 
-    public IState CurrentState => PeekState();
-
+    /// methods
     public override void _Ready()
     {
         _stateStack = new Stack<IState>();

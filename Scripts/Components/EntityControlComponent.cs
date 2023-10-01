@@ -1,35 +1,34 @@
-using System;
 using Godot;
 
 namespace ThronesEra.Scripts.Components;
 
 public partial class EntityControlComponent : Node
 {
-    /// Data
-    [Export] public float Speed { get; set; } = 200.0f;
-
-    public bool CanMove { get; set; }
-
-    /// Nodes
-    private Sprite2D _sprite;
     private AnimationTree _animTree;
     private CharacterBody2D _entity;
 
-    /// Methods
+    /// Nodes
+    private Sprite2D _sprite;
 
+    /// Methods
     public EntityControlComponent()
     {
         Name = "EntityControlComponent";
     }
-    
+
+    /// Data
+    [Export]
+    public float Speed { get; set; } = 200.0f;
+
+    public bool CanMove { get; set; }
+
     public override void _Ready()
     {
-        
         _entity = GetParent<CharacterBody2D>();
         _sprite = _entity.GetNode<Sprite2D>("Sprite2D");
 
         _animTree = _entity.GetNode<AnimationTree>("AnimationTree");
-        _animTree?.Set("parameters/conditions/idle", (_entity.Velocity == new Vector2(0, 0)));
+        _animTree?.Set("parameters/conditions/idle", _entity.Velocity == new Vector2(0, 0));
 
         CanMove = true;
     }
@@ -43,10 +42,7 @@ public partial class EntityControlComponent : Node
 
     private void Movement()
     {
-        if (!CanMove)
-        {
-            return;
-        }
+        if (!CanMove) return;
         var stateMachine = (AnimationNodeStateMachinePlayback)_animTree?.Get("parameters/playback");
 
         Vector2 velocity;

@@ -2,14 +2,15 @@
 using Godot;
 using Thrones.Scripts.Utility;
 using Thrones.Util;
-using ThronesEra.Scripts.Entities.Components;
 using ThronesEra.Scripts.Components;
+using ThronesEra.Scripts.Entities.Components;
 
 namespace ThronesEra.Scripts.Entities;
 
 public partial class RedEntity : CharacterBody2D, IEntity
 {
-    public RedEntity(CoreStatsComponent coreStats, VitalStatsComponent vitals, EntityControlComponent entityControlComponent)
+    public RedEntity(CoreStatsComponent coreStats, VitalStatsComponent vitals,
+        EntityControlComponent entityControlComponent)
     {
         CoreStats = coreStats;
         AddChild(CoreStats);
@@ -19,17 +20,16 @@ public partial class RedEntity : CharacterBody2D, IEntity
         AddChild(EntityControlComponent);
         _sprite2D = CreateSprite(Paths.REDSPRITE);
         AddChild(_sprite2D);
-        
+
         Name = "Red";
         YSortEnabled = true;
-
     }
 
+    private Sprite2D _sprite2D;
+    
     public CoreStatsComponent CoreStats { get; set; }
     public VitalStatsComponent Vitals { get; set; }
     public EntityControlComponent EntityControlComponent { get; set; }
-
-    private Sprite2D _sprite2D;
 
     public IEnumerable<Component> QueryComponents()
     {
