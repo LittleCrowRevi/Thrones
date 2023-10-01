@@ -40,6 +40,10 @@ public partial class GameManager : Node2D
 
     public override void _Process(double delta)
     {
+        if (Input.IsActionJustReleased("loadDev"))
+        {
+            GlobalLoader.EmitSignal(GlobalLoader.SignalName.InitLoadScene, Paths.DEVLEVEL, true);
+        }
     }
 
     private void InitGameAsync()
@@ -57,6 +61,7 @@ public partial class GameManager : Node2D
 
         // SceneLoader
         GlobalLoader = new GlobalLoader();
+        GlobalLoader.loadingBar = (ProgressBar)GetNode("CanvasLayer/Control/ProgressBar");
         AddChild(GlobalLoader);
 
         // PlayerCharacters Array

@@ -18,5 +18,3 @@ hframes = 16
 frame = 4
 
 [node name="StateManager" parent="." instance=ExtResource("3_ekllq")]
-
-[node name="CameraAnchor" type="RemoteTransform2D" parent="."]

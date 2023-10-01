@@ -8,13 +8,9 @@ public partial class EntityControlComponent : Node
     /// Data
     [Export] public float Speed { get; set; } = 200.0f;
 
-    // Min and Max Zoom
-    private Vector2 ZoomLevels = new(2.5f, 5.0f);
-
     public bool CanMove { get; set; }
 
     /// Nodes
-    private Camera2D _camera;
     private Sprite2D _sprite;
     private AnimationTree _animTree;
     private CharacterBody2D _entity;
@@ -29,9 +25,6 @@ public partial class EntityControlComponent : Node
     public override void _Ready()
     {
         
-        Viewport root = GetTree().Root;
-        _camera = root.GetNode<Node>("GameManager").GetNode<Camera2D>("GlobalCamera");
-
         _entity = GetParent<CharacterBody2D>();
         _sprite = _entity.GetNode<Sprite2D>("Sprite2D");
 
@@ -41,38 +34,14 @@ public partial class EntityControlComponent : Node
         CanMove = true;
     }
 
-    public override void _Process(double delta)
-    {
-        CameraZoom();
-    }
-
     public override void _PhysicsProcess(double delta)
     {
         Movement();
         _entity.MoveAndSlide();
     }
 
-    /// <summary>
-    /// Handles Camera Zoom as well as limits of the zoom.
-    /// </summary>
-    public void CameraZoom()
-    {
-        // Zoom Action
-        if (Input.IsActionJustReleased("scroll_up"))
-        {
-            var currentZoom = _camera.Zoom;
-            var clampedZoom = Math.Clamp(currentZoom.X * 1.1f, ZoomLevels.X, ZoomLevels.Y);
-            _camera.Zoom = new Vector2(clampedZoom, clampedZoom);
-        }
-        if (Input.IsActionJustReleased("scroll_down"))
-        {
-            var currentZoom = _camera.Zoom;
-            var clampedZoom = Math.Clamp(currentZoom.X * 0.8f, ZoomLevels.X, ZoomLevels.Y);
-            _camera.Zoom = new Vector2(clampedZoom, clampedZoom);
-        }
-    }
 
-    public void Movement()
+    private void Movement()
     {
         if (!CanMove)
         {

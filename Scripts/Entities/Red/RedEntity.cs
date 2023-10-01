@@ -17,12 +17,10 @@ public partial class RedEntity : CharacterBody2D, IEntity
         AddChild(Vitals);
         EntityControlComponent = entityControlComponent;
         AddChild(EntityControlComponent);
-
         _sprite2D = CreateSprite(Paths.REDSPRITE);
         AddChild(_sprite2D);
         
         Name = "Red";
-        Position = new Vector2(40f, 50f);
         YSortEnabled = true;
 
     }

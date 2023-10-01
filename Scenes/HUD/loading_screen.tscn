@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://chkk5uawx77xm"]
+
+[ext_resource type="Theme" uid="uid://dxqqrkxgpygx5" path="res://Resources/Fonts/fredeka.tres" id="1_hc46c"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 394.0
+offset_top = 507.0
+offset_right = 434.0
+offset_bottom = 547.0
+theme = ExtResource("1_hc46c")
+metadata/_edit_use_anchors_ = true
+
+[node name="ProgressBar" type="ProgressBar" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 4.775
+anchor_bottom = 0.6
+offset_right = 130.0
+offset_bottom = 27.0
+theme = ExtResource("1_hc46c")
+metadata/_edit_use_anchors_ = true
