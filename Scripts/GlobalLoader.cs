@@ -67,25 +67,5 @@ public partial class GlobalLoader : Node
         LoadingBar.Value = 0;
         LoadingBar.Visible = false;
     }
-
-    public void GotoScene(string path, bool unloadPrevious)
-    {
-        // The solution is to defer the load to a later time, when
-        // we can be sure that no code from the current scene is running:
-        CallDeferred(nameof(DeferredGotoScene), path, unloadPrevious);
-    }
-
-    public void DeferredGotoScene(string path, bool unloadPrevious)
-    {
-        // It is now safe to remove the current scene
-        if (unloadPrevious) ActiveScene?.Free();
-
-        var nextScene = (PackedScene)GD.Load(path);
-
-        ActiveScene = nextScene.Instantiate();
-
-        GetTree().Root.GetNode("GameManager/World").AddChild(ActiveScene);
-
-        Logger.INFO($"Loaded new scene: {ActiveScene.Name}");
-    }
+    
 }

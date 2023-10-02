@@ -9,6 +9,9 @@ public partial class HPBar : TextureProgressBar
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		AddChild(HpLabel);
+		HpLabel.Scale = new Vector2(0.2F, 0.2F);
+		HpLabel.Position = new Vector2(20F, 0F);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

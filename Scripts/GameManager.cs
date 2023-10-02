@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Godot;
-using Microsoft.VisualBasic;
 using Thrones.Scripts;
 using Thrones.Scripts.Utility;
 using Thrones.Util;
@@ -74,25 +73,11 @@ public partial class GameManager : Node2D
         var entityControl = new EntityControlComponent(StateManager);
         ChangeControlledPc += entityControl.OnChangeControlledPc;
         
-        // PlayerCharacters Array
-        PlayerCharacters = new Node2D();
-        PlayerCharacters.YSortEnabled = true;
-        PlayerCharacters.Name = "PlayerCharacters";
-        AddChild(PlayerCharacters);
-
-        // Load Player Characters
-        var redEntity = new RedEntity(
-            new CoreStatsComponent(1, 1, 1, 1),
-            new VitalStatsComponent(100, 100, 100)
-        );
-        ControlledCharacter = redEntity;
-        ControlledCharacter.Visible = true;
-        ControlledCharacter.Vitals.HpChange += HpBar.UpdateHpInfo;
-        PlayerCharacters.AddChild(ControlledCharacter);
-
+        // Player Chars
+        LoadPlayer();
+        
         StateManager.EmitSignal(StateManager.SignalName.StateChange, true, new ExplorationState(StateManager, this));
         Logger.INFO("Initiated Game");
-        Logger.INFO(HUD.Name);
         HpBar.Visible = true;
     }
 
@@ -113,6 +98,25 @@ public partial class GameManager : Node2D
         HpBar.Value = 100;
         
         GetNode("HUD").AddChild(HpBar);
+    }
+    
+    private void LoadPlayer()
+    {
+        // PlayerCharacters Array
+        PlayerCharacters = new Node2D();
+        PlayerCharacters.YSortEnabled = true;
+        PlayerCharacters.Name = "PlayerCharacters";
+        AddChild(PlayerCharacters);
+
+        // Load Player Characters
+        var redEntity = new RedEntity(
+            new CoreStatsComponent(1, 1, 1, 1),
+            new VitalStatsComponent(100, 100, 100)
+        );
+        ControlledCharacter = redEntity;
+        ControlledCharacter.Visible = true;
+        ControlledCharacter.Vitals.HpChange += HpBar.UpdateHpInfo;
+        PlayerCharacters.AddChild(ControlledCharacter);
     }
 
     public static GameManager GetGameScript(Node node)
