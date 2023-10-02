@@ -20,11 +20,6 @@ public partial class GlobalLoader : Node
     public Node ActiveScene { get; set; }
     public ProgressBar LoadingBar { get; set; }
 
-    /// Methods
-    public override void _Ready()
-    {
-    }
-
     public static Texture2D LoadTexture(string path)
     {
         var resource = GD.Load(path);
@@ -36,13 +31,17 @@ public partial class GlobalLoader : Node
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    public static async Task<Resource> LoadResource(string path)
+    public Resource LoadResource(string path)
     {
         ResourceLoader.LoadThreadedRequest(path);
-
-        while (ResourceLoader.LoadThreadedGetStatus(path) != ResourceLoader.ThreadLoadStatus.Loaded)
-            await Task.Delay(500);
-
+        LoadingBar.Visible = true;
+        var progress = new Array();
+        while (ResourceLoader.LoadThreadedGetStatus(path, progress) != ResourceLoader.ThreadLoadStatus.Loaded)
+        {
+            LoadingBar.Value = (double)progress[0] * 100;
+        }
+        LoadingBar.Value = 0;
+        LoadingBar.Visible = false;
         return ResourceLoader.LoadThreadedGet(path);
     }
 

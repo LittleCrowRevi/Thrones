@@ -28,6 +28,8 @@ public partial class VitalStatsComponent : Component
 
     #endregion
 
+    #region Methods
+    
     public override void _Process(double delta)
     {
         
@@ -46,4 +48,6 @@ public partial class VitalStatsComponent : Component
         CurrentHp = newHp;
         EmitSignal(SignalName.HpChange, CurrentHp, TotalHp);
     }
+    
+    #endregion
 }

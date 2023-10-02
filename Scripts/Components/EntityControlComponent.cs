@@ -24,14 +24,15 @@ public partial class EntityControlComponent : Node
     /// Data
     [Export]
     public float Speed { get; set; } = 200.0f;
-
     public bool CanMove { get; set; }
 
-    public override void _Ready()
+    public override void _PhysicsProcess(double delta)
     {
-
+        if (_stateManager.CurrentState is not ExplorationState) return;
+        Movement();
+        _entity.MoveAndSlide();
     }
-
+    
     public void OnChangeControlledPc(IEntity entity)
     {
         if (GetParent() is not null) RemoveChild(this);
@@ -44,14 +45,6 @@ public partial class EntityControlComponent : Node
 
         CanMove = true;
     }
-
-    public override void _PhysicsProcess(double delta)
-    {
-        if (_stateManager.CurrentState is not ExplorationState) return;
-        Movement();
-        _entity.MoveAndSlide();
-    }
-
 
     private void Movement()
     {

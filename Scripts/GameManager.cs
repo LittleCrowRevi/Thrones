@@ -36,9 +36,9 @@ public partial class GameManager : Node2D
     private HUD HUD { get; set; }
 
     /// methods
-    public override async void _Ready()
+    public override void _Ready()
     {
-        await InitGame();
+        InitGame();
     }
 
     public override void _Process(double delta)
@@ -47,7 +47,7 @@ public partial class GameManager : Node2D
             GlobalLoader.EmitSignal(GlobalLoader.SignalName.InitLoadScene, Paths.DEVLEVEL, true);
     }
 
-    private async Task InitGame()
+    private void InitGame()
     {
         Logger.INFO("Initializing Game");
 
@@ -60,12 +60,15 @@ public partial class GameManager : Node2D
         AddChild(GlobalLoader);
         
         // HUD
-        await LoadHUD();
+        LoadHUD();
 
         // Camera
         Camera = new GlobalCamera();
         ChangeControlledPc += Camera.OnChangeTarget;
         AddChild(Camera);
+        
+        // Load Last Active Scene
+        GlobalLoader.EmitSignal(GlobalLoader.SignalName.InitLoadScene, Paths.DEVLEVEL, true);
         
         // input
         var entityControl = new EntityControlComponent(StateManager);
@@ -87,31 +90,29 @@ public partial class GameManager : Node2D
         ControlledCharacter.Vitals.HpChange += HpBar.UpdateHpInfo;
         PlayerCharacters.AddChild(ControlledCharacter);
 
-        // Load Last Active Scene
-        GlobalLoader.EmitSignal(GlobalLoader.SignalName.InitLoadScene, Paths.DEVLEVEL, true);
         StateManager.EmitSignal(StateManager.SignalName.StateChange, true, new ExplorationState(StateManager, this));
         Logger.INFO("Initiated Game");
         Logger.INFO(HUD.Name);
         HpBar.Visible = true;
     }
 
-    private async Task LoadHUD()
+    private void LoadHUD()
     {
-        var hud = (PackedScene)await GlobalLoader.LoadResource(Paths.HUDSCENE);
-        HUD = hud.Instantiate<HUD>();
+        HUD = new HUD();
         AddChild(HUD);
-        GlobalLoader.LoadingBar = (ProgressBar)GetNode("HUD/Control/ProgressBar");
+        HUD.StateManager = StateManager;
+        GlobalLoader.LoadingBar = HUD.LoadingBar;
         
         HpBar = new HPBar();
         HpBar.Visible = false;
         HpBar.TextureUnder = GlobalLoader.LoadTexture(Paths.HPBARUNDER);
         HpBar.TextureProgress = GlobalLoader.LoadTexture(Paths.HPBARFILL);
         HpBar.TextureProgressOffset = new Vector2(12F, 1F);
-        HpBar.Position = new Vector2(-350F, -460F);
+        HpBar.Position = new Vector2(10F, 15F);
         HpBar.Scale = new Vector2(5F, 5F);
         HpBar.Value = 100;
         
-        GetNode("HUD/Control").AddChild(HpBar);
+        GetNode("HUD").AddChild(HpBar);
     }
 
     public static GameManager GetGameScript(Node node)
