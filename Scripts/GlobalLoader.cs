@@ -34,16 +34,16 @@ public partial class GlobalLoader : Node
     /// <summary>
     ///     Async loads a packed scene entity
     /// </summary>
-    /// <param name="entityPath"></param>
+    /// <param name="path"></param>
     /// <returns></returns>
-    public static async Task<Resource> LoadEntity(string entityPath)
+    public static async Task<Resource> LoadResource(string path)
     {
-        ResourceLoader.LoadThreadedRequest(entityPath);
+        ResourceLoader.LoadThreadedRequest(path);
 
-        while (ResourceLoader.LoadThreadedGetStatus(entityPath) != ResourceLoader.ThreadLoadStatus.Loaded)
+        while (ResourceLoader.LoadThreadedGetStatus(path) != ResourceLoader.ThreadLoadStatus.Loaded)
             await Task.Delay(500);
 
-        return ResourceLoader.LoadThreadedGet(entityPath);
+        return ResourceLoader.LoadThreadedGet(path);
     }
 
     private void LoadScene(string path, bool unloadPrevious)
@@ -54,7 +54,6 @@ public partial class GlobalLoader : Node
         var progress = new Array();
         while (ResourceLoader.LoadThreadedGetStatus(path, progress) != ResourceLoader.ThreadLoadStatus.Loaded)
         {
-            Logger.INFO(progress);
             LoadingBar.Value = (double)progress[0] * 100;
         }
 

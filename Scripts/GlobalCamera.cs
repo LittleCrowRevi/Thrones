@@ -44,7 +44,6 @@ public partial class GlobalCamera : Camera2D
 
     public void OnChangeTarget(Node2D newTarget)
     {
-        Logger.INFO("changing camera target");
         Target = newTarget;
         Position = Target.Position;
     }

@@ -1,4 +1,7 @@
 using Godot;
+using Thrones.Scripts;
+using ThronesEra.Scripts.Entities;
+using ThronesEra.Scripts.States.ParentStates;
 
 namespace ThronesEra.Scripts.Components;
 
@@ -6,13 +9,15 @@ public partial class EntityControlComponent : Node
 {
     private AnimationTree _animTree;
     private CharacterBody2D _entity;
-
+    private StateManager _stateManager;
+    
     /// Nodes
     private Sprite2D _sprite;
 
     /// Methods
-    public EntityControlComponent()
+    public EntityControlComponent(StateManager stateManager)
     {
+        _stateManager = stateManager;
         Name = "EntityControlComponent";
     }
 
@@ -24,7 +29,14 @@ public partial class EntityControlComponent : Node
 
     public override void _Ready()
     {
-        _entity = GetParent<CharacterBody2D>();
+
+    }
+
+    public void OnChangeControlledPc(IEntity entity)
+    {
+        if (GetParent() is not null) RemoveChild(this);
+        entity.AddChild(this);
+        _entity = entity;
         _sprite = _entity.GetNode<Sprite2D>("Sprite2D");
 
         _animTree = _entity.GetNode<AnimationTree>("AnimationTree");
@@ -35,6 +47,7 @@ public partial class EntityControlComponent : Node
 
     public override void _PhysicsProcess(double delta)
     {
+        if (_stateManager.CurrentState is not ExplorationState) return;
         Movement();
         _entity.MoveAndSlide();
     }

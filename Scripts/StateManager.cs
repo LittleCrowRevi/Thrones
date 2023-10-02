@@ -7,6 +7,11 @@ namespace Thrones.Scripts;
 // implement transition methods? from to?
 public partial class StateManager : Node
 {
+    public StateManager()
+    {
+        Name = "StateManager";
+    }
+    
     /// Events
     [Signal] public delegate void StateChangeEventHandler(bool replaceState, IState nextState);
 
@@ -14,11 +19,6 @@ public partial class StateManager : Node
     private Stack<IState> _stateStack;
     public IState CurrentState => PeekState();
     private List<Transition> _transitions;
-
-    public StateManager()
-    {
-        Name = "StateManager";
-    }
 
     /// methods
     public override void _Ready()
@@ -36,7 +36,10 @@ public partial class StateManager : Node
     private void Update()
     {
         if (_transitions.Count > 0) ResolveTransitions(_transitions);
-        CurrentState?.Execute();
+        if (CurrentState is not null)
+        {
+            CurrentState.Execute();
+        }
     }
 
     private IState PeekState()
@@ -96,9 +99,8 @@ public partial class StateManager : Node
         if (nextState == CurrentState) return;
 
         CurrentState?.Exit();
-        _stateStack?.Pop();
-
-        _stateStack?.Push(nextState);
+        if (_stateStack.Count > 0) _stateStack.Pop();
+        _stateStack.Push(nextState);
         CurrentState?.Enter();
     }
 

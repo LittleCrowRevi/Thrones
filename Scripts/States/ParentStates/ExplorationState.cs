@@ -10,6 +10,7 @@ public partial class ExplorationState : IState
     /// methods
     public ExplorationState(StateManager stateManager, GameManager gameManager)
     {
+        Name = "Exploration State";
         StateManager = stateManager;
         GameManager = gameManager;
     }

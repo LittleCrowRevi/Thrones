@@ -9,15 +9,12 @@ namespace ThronesEra.Scripts.Entities;
 
 public partial class RedEntity : IEntity
 {
-    public RedEntity(CoreStatsComponent coreStats, VitalStatsComponent vitals,
-        EntityControlComponent entityControlComponent)
+    public RedEntity(CoreStatsComponent coreStats, VitalStatsComponent vitals)
     {
         CoreStats = coreStats;
         AddChild(CoreStats);
         Vitals = vitals;
         AddChild(Vitals);
-        EntityControlComponent = entityControlComponent;
-        AddChild(EntityControlComponent);
         
         _sprite2D = CreateSprite(Paths.REDSPRITE);
         AddChild(_sprite2D);

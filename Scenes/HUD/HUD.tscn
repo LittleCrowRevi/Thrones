@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://chkk5uawx77xm"]
+[gd_scene load_steps=3 format=3 uid="uid://chkk5uawx77xm"]
 
+[ext_resource type="Script" path="res://Scenes/HUD/HUD.cs" id="1_7t1ql"]
 [ext_resource type="Theme" uid="uid://dxqqrkxgpygx5" path="res://Resources/Fonts/fredeka.tres" id="1_hc46c"]
 
 [node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_7t1ql")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3

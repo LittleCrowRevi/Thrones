@@ -1,18 +1,22 @@
+using System.Threading.Tasks;
 using Godot;
+using Microsoft.VisualBasic;
 using Thrones.Scripts;
 using Thrones.Scripts.Utility;
 using Thrones.Util;
 using ThronesEra;
+using ThronesEra.Scenes.HUD;
 using ThronesEra.Scripts.Components;
 using ThronesEra.Scripts.Entities;
 using ThronesEra.Scripts.Entities.Components;
+using ThronesEra.Scripts.States.ParentStates;
 
 namespace Thrones;
 
 public partial class GameManager : Node2D
 {
     /// signals
-    [Signal] public delegate void ChangeControlledPcEventHandler(Node2D target);
+    [Signal] public delegate void ChangeControlledPcEventHandler(IEntity target);
 
     /// nodes
 
@@ -29,11 +33,12 @@ public partial class GameManager : Node2D
     public Node2D PlayerCharacters { get; set; }
     public IEntity ControlledCharacter { get; set; }
     private NodePath CurrentLocation { get; set; }
+    private HUD HUD { get; set; }
 
     /// methods
-    public override void _Ready()
+    public override async void _Ready()
     {
-        InitGameAsync();
+        await InitGame();
     }
 
     public override void _Process(double delta)
@@ -42,7 +47,7 @@ public partial class GameManager : Node2D
             GlobalLoader.EmitSignal(GlobalLoader.SignalName.InitLoadScene, Paths.DEVLEVEL, true);
     }
 
-    private void InitGameAsync()
+    private async Task InitGame()
     {
         Logger.INFO("Initializing Game");
 
@@ -50,19 +55,22 @@ public partial class GameManager : Node2D
         StateManager = new StateManager();
         AddChild(StateManager);
         
+        // SceneLoader
+        GlobalLoader = new GlobalLoader();
+        AddChild(GlobalLoader);
+        
         // HUD
-        LoadHUD();
+        await LoadHUD();
 
         // Camera
         Camera = new GlobalCamera();
         ChangeControlledPc += Camera.OnChangeTarget;
         AddChild(Camera);
-
-        // SceneLoader
-        GlobalLoader = new GlobalLoader();
-        GlobalLoader.LoadingBar = (ProgressBar)GetNode("HUD/Control/ProgressBar");
-        AddChild(GlobalLoader);
-
+        
+        // input
+        var entityControl = new EntityControlComponent(StateManager);
+        ChangeControlledPc += entityControl.OnChangeControlledPc;
+        
         // PlayerCharacters Array
         PlayerCharacters = new Node2D();
         PlayerCharacters.YSortEnabled = true;
@@ -72,25 +80,28 @@ public partial class GameManager : Node2D
         // Load Player Characters
         var redEntity = new RedEntity(
             new CoreStatsComponent(1, 1, 1, 1),
-            new VitalStatsComponent(100, 100, 100),
-            new EntityControlComponent()
+            new VitalStatsComponent(100, 100, 100)
         );
-        
         ControlledCharacter = redEntity;
         ControlledCharacter.Visible = true;
         ControlledCharacter.Vitals.HpChange += HpBar.UpdateHpInfo;
         PlayerCharacters.AddChild(ControlledCharacter);
 
-        EmitSignal(SignalName.ChangeControlledPc, ControlledCharacter);
-
         // Load Last Active Scene
         GlobalLoader.EmitSignal(GlobalLoader.SignalName.InitLoadScene, Paths.DEVLEVEL, true);
-
+        StateManager.EmitSignal(StateManager.SignalName.StateChange, true, new ExplorationState(StateManager, this));
+        Logger.INFO("Initiated Game");
+        Logger.INFO(HUD.Name);
         HpBar.Visible = true;
     }
 
-    private void LoadHUD()
+    private async Task LoadHUD()
     {
+        var hud = (PackedScene)await GlobalLoader.LoadResource(Paths.HUDSCENE);
+        HUD = hud.Instantiate<HUD>();
+        AddChild(HUD);
+        GlobalLoader.LoadingBar = (ProgressBar)GetNode("HUD/Control/ProgressBar");
+        
         HpBar = new HPBar();
         HpBar.Visible = false;
         HpBar.TextureUnder = GlobalLoader.LoadTexture(Paths.HPBARUNDER);
