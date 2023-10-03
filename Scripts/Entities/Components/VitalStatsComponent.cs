@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Godot;
 
 namespace ThronesEra.Scripts.Entities.Components;
@@ -16,9 +17,11 @@ public partial class VitalStatsComponent : Component
     [Signal] public delegate void HpChangeEventHandler(int currentHp, int totalHp);
 
     #region Data Fields
+    
+    public IEntity ParentEntity { get; set; }
 
     public int TotalHp { get; set; } = 100;
-    [Export] public int CurrentHp { get; set; }
+    public int CurrentHp { get; set; }
 
     public int TotalMp { get; set; } = 100;
     public int CurrentMp { get; set; }
@@ -29,10 +32,12 @@ public partial class VitalStatsComponent : Component
     #endregion
 
     #region Methods
-    
-    public override void _Process(double delta)
+
+    public void CalculateVitals()
     {
-        
+        var components = (CoreStatsComponent)ParentEntity.QueryComponents().ToList()[1];
+        TotalHp = components.Constitution * 100;
+        EmitSignal(SignalName.HpChange, CurrentHp, TotalHp);
     }
 
     public void OnHeal(int heal)

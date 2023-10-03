@@ -11,7 +11,7 @@ public partial class HPBar : TextureProgressBar
 	{
 		AddChild(HpLabel);
 		HpLabel.Scale = new Vector2(0.2F, 0.2F);
-		HpLabel.Position = new Vector2(20F, 0F);
+		HpLabel.Position = new Vector2(25F, 0.5F);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

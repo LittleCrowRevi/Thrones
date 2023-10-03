@@ -14,11 +14,12 @@ public partial class RedEntity : IEntity
         CoreStats = coreStats;
         AddChild(CoreStats);
         Vitals = vitals;
+        Vitals.ParentEntity = this;
         AddChild(Vitals);
         
         _sprite2D = CreateSprite(Paths.REDSPRITE);
         AddChild(_sprite2D);
-
+        
         Name = "Red";
         YSortEnabled = true;
     }
@@ -36,6 +37,11 @@ public partial class RedEntity : IEntity
             CoreStats
         };
         return components;
+    }
+
+    public override void _Ready()
+    {
+        Vitals.CalculateVitals();
     }
 
     private Sprite2D CreateSprite(string path)

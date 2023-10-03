@@ -93,7 +93,7 @@ public partial class GameManager : Node2D
         HpBar.TextureUnder = GlobalLoader.LoadTexture(Paths.HPBARUNDER);
         HpBar.TextureProgress = GlobalLoader.LoadTexture(Paths.HPBARFILL);
         HpBar.TextureProgressOffset = new Vector2(12F, 1F);
-        HpBar.Position = new Vector2(10F, 15F);
+        HpBar.Position = new Vector2(10F, 15.5F);
         HpBar.Scale = new Vector2(5F, 5F);
         HpBar.Value = 100;
         
@@ -110,7 +110,7 @@ public partial class GameManager : Node2D
 
         // Load Player Characters
         var redEntity = new RedEntity(
-            new CoreStatsComponent(1, 1, 1, 1),
+            new CoreStatsComponent(10, 10, 10, 10),
             new VitalStatsComponent(100, 100, 100)
         );
         ControlledCharacter = redEntity;
