@@ -41,7 +41,8 @@ public partial class RedEntity : IEntity
 
     public override void _Ready()
     {
-        Vitals.CalculateVitals();
+        Vitals.CalculateHealth();
+        Vitals.CalculateMana();
     }
 
     private Sprite2D CreateSprite(string path)
@@ -60,11 +61,11 @@ public partial class RedEntity : IEntity
     {
         if (Input.IsActionJustPressed("dev_heal"))
         {
-            Vitals.OnHeal(10);
+            Vitals.OnHeal(100);
         }
         if (Input.IsActionJustPressed("dev_damage"))
         {
-            Vitals.OnDamage(10);
+            Vitals.OnDamage(100);
         }
     }
 }

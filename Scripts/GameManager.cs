@@ -115,7 +115,8 @@ public partial class GameManager : Node2D
         );
         ControlledCharacter = redEntity;
         ControlledCharacter.Visible = true;
-        ControlledCharacter.Vitals.HpChange += HpBar.UpdateHpInfo;
+        ControlledCharacter.Vitals.HealthChange += HpBar.UpdateHpInfo;
+        ControlledCharacter.Vitals.ManaChange += HUD.UpdateMana;
         PlayerCharacters.AddChild(ControlledCharacter);
     }
 

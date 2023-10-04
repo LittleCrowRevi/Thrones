@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
@@ -14,7 +15,8 @@ public partial class VitalStatsComponent : Component
         CurrentEp = currentEp;
     }
 
-    [Signal] public delegate void HpChangeEventHandler(int currentHp, int totalHp);
+    [Signal] public delegate void HealthChangeEventHandler(int currentHp, int totalHp);
+    [Signal] public delegate void ManaChangeEventHandler(int currentHp, int totalHp);
 
     #region Data Fields
     
@@ -33,25 +35,32 @@ public partial class VitalStatsComponent : Component
 
     #region Methods
 
-    public void CalculateVitals()
+    public void CalculateHealth()
     {
         var components = (CoreStatsComponent)ParentEntity.QueryComponents().ToList()[1];
         TotalHp = components.Constitution * 100;
-        EmitSignal(SignalName.HpChange, CurrentHp, TotalHp);
+        EmitSignal(SignalName.HealthChange, CurrentHp, TotalHp);
+    }
+
+    public void CalculateMana()
+    {
+        var component = (CoreStatsComponent)ParentEntity.QueryComponents().ToList()[1];
+        TotalMp = component.Intelligence * 100;
+        EmitSignal(SignalName.ManaChange, CurrentMp, TotalMp);
     }
 
     public void OnHeal(int heal)
     {
         var newHp = Math.Clamp(CurrentHp + heal, 0, TotalHp);
         CurrentHp = newHp;
-        EmitSignal(SignalName.HpChange, CurrentHp, TotalHp);
+        EmitSignal(SignalName.HealthChange, CurrentHp, TotalHp);
     }
     
     public void OnDamage(int damage)
     {
         var newHp = Math.Clamp(CurrentHp - damage, 0, TotalHp);
         CurrentHp = newHp;
-        EmitSignal(SignalName.HpChange, CurrentHp, TotalHp);
+        EmitSignal(SignalName.HealthChange, CurrentHp, TotalHp);
     }
     
     #endregion
