@@ -29,7 +29,7 @@ public partial class RedEntity : IEntity
     public sealed override VitalStatsComponent Vitals { get; set; }
     public EntityControlComponent EntityControlComponent { get; set; }
 
-    public override IEnumerable<Component> QueryComponents()
+    public override List<Component> QueryComponents()
     {
         List<Component> components = new()
         {

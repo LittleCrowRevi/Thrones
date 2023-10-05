@@ -37,11 +37,11 @@ public partial class VitalStatsComponent : Component
 
     public void CalculateHealth()
     {
-        var components = (CoreStatsComponent)ParentEntity.QueryComponents().ToList()[1];
+        var components = (CoreStatsComponent)ParentEntity.QueryComponents()[1];
         TotalHp = components.Constitution * 100;
         EmitSignal(SignalName.HealthChange, CurrentHp, TotalHp);
     }
-
+    
     public void CalculateMana()
     {
         var component = (CoreStatsComponent)ParentEntity.QueryComponents().ToList()[1];
