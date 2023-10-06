@@ -17,9 +17,7 @@ public partial class ExplorationState : IState
 
     /// data
     /// nodes
-
     public sealed override StateManager StateManager { get; set; }
-
     public sealed override GameManager GameManager { get; set; }
 
     public override void Enter()

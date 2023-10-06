@@ -1,10 +1,12 @@
-﻿using Godot;
+﻿using System.Collections.Generic;
+using Godot;
 using Thrones.Util;
 using ThronesEra;
 using ThronesEra.Scenes.HUD;
 using ThronesEra.Scripts.Components;
 using ThronesEra.Scripts.Entities;
 using ThronesEra.Scripts.Entities.Components;
+using ThronesEra.Scripts.Skills;
 using ThronesEra.Scripts.States.ParentStates;
 
 namespace Thrones.Scripts.Utility;
@@ -93,6 +95,9 @@ public class StartUpManager
             new CoreStatsComponent(10, 10, 10, 10),
             new VitalStatsComponent(100, 100, 100)
         );
+        redEntity.SkillsComponent = new SkillsComponent(new List<Skill>());
+        redEntity.SkillsComponent.AddSkill(new ActiveSkills.Fireball());
+        
         GM.ControlledCharacter = redEntity;
         GM.ControlledCharacter.Visible = true;
         

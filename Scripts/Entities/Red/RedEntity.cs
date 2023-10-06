@@ -25,19 +25,36 @@ public partial class RedEntity : IEntity
     }
 
     private readonly Sprite2D _sprite2D;
+    
+    #region Components
+    
     public sealed override CoreStatsComponent CoreStats { get; set; }
     public sealed override VitalStatsComponent Vitals { get; set; }
     public EntityControlComponent EntityControlComponent { get; set; }
 
-    public override List<Component> QueryComponents()
+    private SkillsComponent _skillsComponent;
+    public SkillsComponent SkillsComponent
     {
-        List<Component> components = new()
+        get => _skillsComponent;
+        set
         {
-            Vitals,
+            _skillsComponent = value;
+            AddChild(_skillsComponent);
+        }
+    }
+
+    public override List<Component> QueryComponents() 
+    { 
+        List<Component> components = new() 
+        { 
+            Vitals, 
             CoreStats
         };
         return components;
     }
+    #endregion
+
+
 
     public override void _Ready()
     {
