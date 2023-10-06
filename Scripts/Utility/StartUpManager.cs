@@ -48,7 +48,7 @@ public class StartUpManager
         // Player Chars
         LoadPlayer();
         
-        GM.StateManager.EmitSignal(StateManager.SignalName.StateChange, true, new ExplorationState(GM.StateManager, GM));
+        GM.StateManager.EmitSignal(StateManager.SignalName.StateChange, (int)TransitionType.Replace, new ExplorationState(GM.StateManager, GM));
         Logger.INFO("Initiated Game");
         GM.HpBar.Visible = true;
     }

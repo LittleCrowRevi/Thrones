@@ -1,8 +1,26 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using Thrones.Scripts.States;
+using ThronesEra;
 
 namespace Thrones.Scripts;
+
+public enum TransitionType
+{
+    /// <summary>
+    /// Add the new State upon the stack without removing the previous State.
+    /// </summary>
+    Add,
+    /// <summary>
+    /// Replace the previous State on the stack with the new State.
+    /// </summary>
+    Replace,
+    /// <summary>
+    /// Remove the current State from the stack.
+    /// </summary>
+    Remove
+}
 
 // implement transition methods? from to?
 public partial class StateManager : Node
@@ -13,7 +31,7 @@ public partial class StateManager : Node
     }
     
     /// Events
-    [Signal] public delegate void StateChangeEventHandler(bool replaceState, IState nextState);
+    [Signal] public delegate void StateChangeEventHandler(int transitionType, IState nextState);
 
     /// Data Fields
     private Stack<IState> _stateStack;
@@ -47,22 +65,30 @@ public partial class StateManager : Node
         return _stateStack.Count > 0 ? _stateStack.Peek() : null;
     }
 
-    private void ResolveTransitions(IReadOnlyList<Transition> transition)
+    private void ResolveTransitions(IReadOnlyList<Transition> transitions)
     {
-        for (var i = 0; i < transition.Count; i++)
+        if (transitions.Count == 0) return;
+        for (var index = 0; index < transitions.Count; index++)
         {
-            if (transition[i] == null) continue;
-            switch (transition[i].ReplaceState)
+            var transition = transitions[index];
+            if (transition == null) continue;
+            Logger.INFO("Transitioning to State: " + transition.Next.Name);
+            switch (transition.TransitionType)
             {
-                case true:
-                    ReplaceState(transition[i].Next);
-                    _transitions.Remove(transition[i]);
+                case TransitionType.Replace:
+                    ReplaceState(transition.Next);
+                    _transitions.Remove(transition);
                     break;
-
-                case false:
-                    AddState(transition[i].Next);
-                    _transitions.Remove(transition[i]);
+                case TransitionType.Add:
+                    AddState(transition.Next);
+                    _transitions.Remove(transition);
                     break;
+                case TransitionType.Remove:
+                    RemoveState();
+                    _transitions.Remove(transition);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(transitions), "TransitionType missing");
             }
         }
     }
@@ -104,21 +130,22 @@ public partial class StateManager : Node
         CurrentState?.Enter();
     }
 
-    private void OnTransition(bool replaceState, IState state = null)
+    private void OnTransition(int transitionType, IState state = null)
     {
-        var t = new Transition(state, replaceState);
+        Logger.INFO("TransitionType: " + (TransitionType)transitionType);
+        var t = new Transition((TransitionType)transitionType, state);
         _transitions.Add(t);
     }
 
     private sealed class Transition
     {
         public readonly IState Next;
-        public readonly bool ReplaceState;
+        public readonly TransitionType TransitionType;
 
-        public Transition(IState next, bool replaceState)
+        public Transition(TransitionType transitionType, IState next = null)
         {
             Next = next;
-            ReplaceState = replaceState;
+            TransitionType = transitionType;
         }
     }
 }
