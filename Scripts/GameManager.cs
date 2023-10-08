@@ -45,6 +45,11 @@ public partial class GameManager : Node2D
     {
         if (Input.IsActionJustReleased("loadDev"))
             GlobalLoader.EmitSignal(GlobalLoader.SignalName.InitLoadScene, Paths.DEVLEVEL, true);
+        if (Input.IsActionJustReleased("OpenSkillList"))
+        {
+            var skillList = (ItemList)GetNode("SkillList");
+            skillList.AddItem(ControlledCharacter.Skills.Skills[0].Name);
+        }
     }
 
     public static GameManager GetGameScript(Node node)

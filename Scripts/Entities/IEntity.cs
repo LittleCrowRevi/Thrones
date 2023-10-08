@@ -8,6 +8,7 @@ public partial class IEntity : CharacterBody2D
 {
     public virtual CoreStatsComponent CoreStats { get; set; }
     public virtual VitalStatsComponent Vitals { get; set; }
+    public virtual SkillsComponent Skills { get; set; }
 
     public virtual List<Component> QueryComponents()
     {

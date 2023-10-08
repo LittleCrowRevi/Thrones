@@ -1,12 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgk2nqhibk5g6"]
+[gd_scene load_steps=3 format=3 uid="uid://cgk2nqhibk5g6"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.cs" id="1_xel21"]
+[ext_resource type="Theme" uid="uid://dxqqrkxgpygx5" path="res://Resources/Fonts/fredeka.tres" id="2_qowx3"]
 
 [node name="GameManager" type="Node2D"]
 y_sort_enabled = true
-position = Vector2(394, 507)
 script = ExtResource("1_xel21")
 
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true
 position = Vector2(-394, -507)
+
+[node name="SkillList" type="ItemList" parent="."]
+offset_left = 927.0
+offset_top = 265.0
+offset_right = 967.0
+offset_bottom = 305.0
+theme = ExtResource("2_qowx3")
+allow_search = false

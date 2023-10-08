@@ -33,7 +33,7 @@ public partial class RedEntity : IEntity
     public EntityControlComponent EntityControlComponent { get; set; }
 
     private SkillsComponent _skillsComponent;
-    public SkillsComponent SkillsComponent
+    public override SkillsComponent Skills
     {
         get => _skillsComponent;
         set
