@@ -7,8 +7,6 @@ using ThronesEra;
 using ThronesEra.Scenes.HUD;
 using ThronesEra.Scripts.Components;
 using ThronesEra.Scripts.Entities;
-using ThronesEra.Scripts.Entities.Components;
-using ThronesEra.Scripts.States.ParentStates;
 
 namespace Thrones;
 
@@ -47,7 +45,7 @@ public partial class GameManager : Node2D
             GlobalLoader.EmitSignal(GlobalLoader.SignalName.InitLoadScene, Paths.DEVLEVEL, true);
         if (Input.IsActionJustReleased("OpenSkillList"))
         {
-            var skillList = (ItemList)GetNode("SkillList");
+            var skillList = HUD.SkillList;
             skillList.AddItem(ControlledCharacter.Skills.Skills[0].Name);
         }
     }

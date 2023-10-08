@@ -9,23 +9,40 @@ public partial class HUD : CanvasLayer
 	public HUD()
 	{
 		Name = "HUD";
-		
-		_stateLabel = new Label();
-		_stateLabel.Position = new Vector2(980F, 30F);
-		_stateLabel.Text = "state";
-		_stateLabel.Visible = true;
+
+		_stateLabel = new Label
+		{
+			Name = "StateLabel",
+			Position = new Vector2(980F, 30F),
+			Text = "state",
+			Visible = true
+		};
 		AddChild(_stateLabel);
-		
-		LoadingBar = new ProgressBar();
-		LoadingBar.Size = new Vector2(320F, 50F);
-		LoadingBar.Position = new Vector2(400F, 500F);
+
+		LoadingBar = new ProgressBar
+		{
+			Name = "LoadingBar",
+			Size = new Vector2(320F, 50F),
+			Position = new Vector2(400F, 500F)
+		};
 		AddChild(LoadingBar);
 
-		_manaLabel = new Label();
-		_manaLabel.Position = new Vector2(20F, 50F);
-		_manaLabel.Text = "mana";
-		_manaLabel.Visible = true;
+		_manaLabel = new Label
+		{
+			Name = "ManaLabel",
+			Position = new Vector2(20F, 50F),
+			Text = "mana",
+			Visible = true
+		};
 		AddChild(_manaLabel);
+
+		SkillList = new ItemList
+		{
+			Name = "SkillList",
+			Position = new Vector2(900F, 300F),
+			Size = new Vector2(150F, 200f)
+		};
+		AddChild(SkillList);
 
 	}
 	
@@ -33,6 +50,7 @@ public partial class HUD : CanvasLayer
 	private Label _stateLabel;
 	private Label _manaLabel;
 	public ProgressBar LoadingBar { get; set; }
+	public ItemList SkillList { get; set; }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
